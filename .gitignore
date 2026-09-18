@@ -1,0 +1,19 @@
+# Python bytecode from scripts/build_assets.py and scripts/check_readme.py
+__pycache__/
+*.py[cod]
+
+# Local scratch when regenerating artwork
+.tmp/
+*.orig
+*.rej
+
+# Editor / OS noise
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# vexp VS Code extension — auto-generates .clinerules and copilot-instructions
+# in the working directory. Keep them out of the profile repo commit log.
+.clinerules
+.github/copilot-instructions.md

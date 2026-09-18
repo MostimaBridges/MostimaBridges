@@ -1,0 +1,12 @@
+# Normalise line endings so the scripts behave identically on Windows and in CI.
+* text=auto eol=lf
+
+# Generated raster assets: never diff, merge or normalise these.
+*.webp binary
+*.png  binary
+*.jpg  binary
+*.jpeg binary
+*.gif  binary
+
+# The monogram is markup, not a raster.
+*.svg  text eol=lf

@@ -1,0 +1,33 @@
+name: readme-check
+
+# Guards the profile page itself: every local image and link in README.md must
+# resolve, every image must carry real alt text, no local machine paths or
+# secrets may leak in, and the workflows must stay pinned and least-privileged.
+#
+# Asset *regeneration* is intentionally not part of CI: scripts/build_assets.py
+# reads the original artwork, which is not stored in this repository. Only the
+# committed results are validated here.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: readme-check-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    name: validate README, assets and workflows
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Check out
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Validate
+        run: python3 scripts/check_readme.py

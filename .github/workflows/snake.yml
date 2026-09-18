@@ -1,0 +1,61 @@
+name: snake
+
+# Regenerates the contribution snake embedded in README.md -> // ACTIVITY.
+#
+# Runs once a day at an off-the-hour minute, on demand, and on every push to
+# main so a fresh clone shows artwork immediately instead of a broken image.
+# Commits written with the default GITHUB_TOKEN do not trigger further workflow
+# runs, and the job exits without committing when nothing changed, so this
+# cannot loop or spam empty commits.
+
+on:
+  schedule:
+    - cron: "17 3 * * *" # daily, 03:17 UTC
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: snake
+  cancel-in-progress: false
+
+jobs:
+  generate:
+    name: generate contribution snake
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write # only this job writes; the workflow default stays read-only
+    steps:
+      - name: Check out
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Ensure the output directory exists
+        run: mkdir -p assets/generated
+
+      # Colours are the profile palette, not the GitHub defaults, so the graph
+      # matches the hero and the project cards.
+      #   dark  : snake #8B5CF6 (violet)  dots #1A1027 -> #FF4D7E (void -> ember)
+      #   light : snake #6D3FD1 (violet)  dots #EFE9F6 -> #8A1043 (mist -> deep)
+      - name: Generate snake
+        uses: Platane/snk@d8f6715049803e982ee5ff501b6b9b7d5deeb09b # v3.5.0
+        with:
+          github_user_name: ${{ github.repository_owner }}
+          outputs: |
+            assets/generated/snake-dark.svg?color_snake=#8B5CF6&color_dots=#1A1027,#3D1B3A,#7A1F45,#C3134D,#FF4D7E
+            assets/generated/snake-light.svg?color_snake=#6D3FD1&color_dots=#EFE9F6,#F0C9DA,#DC93B4,#C2185B,#8A1043
+
+      - name: Commit only if the generated assets actually changed
+        run: |
+          set -euo pipefail
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/generated
+          if git diff --cached --quiet; then
+            echo "generated assets unchanged - nothing to commit"
+            exit 0
+          fi
+          git commit -m "chore(assets): regenerate contribution snake [skip ci]"
+          git push
