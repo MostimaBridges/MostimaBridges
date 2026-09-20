@@ -9,6 +9,8 @@ Checks
 README.md
   * every relative ``src`` / ``srcset`` / ``href`` target exists on disk
   * no absolute local paths (``C:\\``, ``D:\\``, ``E:\\``, ``file://``)
+  * no bare comma in a ``srcset`` (HTML would read it as a candidate separator
+    and silently truncate the URL)
   * every ``<img>`` has an ``alt`` attribute, and it is not a placeholder
   * every ``<picture>`` has at least one ``<source>`` and a fallback ``<img>``
   * ``<picture>`` / ``<div>`` / ``<p>`` / ``<table>`` tags are balanced
@@ -115,6 +117,19 @@ def check_readme() -> None:
     if re.search(r"\sstyle\s*=", text):
         err("README.md uses a style= attribute; GitHub strips these")
 
+    # HTML splits srcset on every comma, whitespace or not, so a comma inside a
+    # URL silently truncates the value to its first candidate. skillicons.dev
+    # takes its icon list as `?i=py,ts,js`, which GitHub therefore rewrites to
+    # `?i=py`: the row keeps one icon and drops the other seven. Encode it.
+    for m in re.finditer(r"\bsrcset\s*=\s*\"([^\"]*)\"", text):
+        value = m.group(1)
+        if "," in value:
+            err(
+                "srcset holds a bare comma in "
+                f"{value[:60]!r}; HTML reads it as a candidate separator and keeps "
+                "only what precedes it. Percent-encode it as %2C."
+            )
+
     # ── images: alt text ──────────────────────────────────────────────────
     for m in re.finditer(r"<img\b[^>]*>", text, re.DOTALL):
         tag = m.group(0)
@@ -142,16 +157,14 @@ def check_readme() -> None:
     for attr in ("src", "srcset", "href"):
         for m in re.finditer(rf"\b{attr}\s*=\s*\"([^\"]+)\"", text):
             value = m.group(1)
-            # srcset is a comma-separated candidate list, but a comma is also
-            # legal inside a URL — skillicons.dev uses `?i=py,ts,js`. Only split
-            # where a comma is followed by whitespace, which is the descriptor
-            # separator in real srcset syntax.
-            parts = re.split(r",\s+", value) if attr == "srcset" else [value]
-            for part in parts:
-                candidate = part.strip().split(" ")[0].strip()
-                candidate = URL_SUFFIX.sub("", candidate)
-                if candidate and not is_external(candidate):
-                    refs.add(candidate)
+            # HTML splits srcset candidates on every comma, whitespace or not.
+            # A bare comma is already an error above, so a srcset that reaches
+            # this point holds a single candidate; the `2x` / `640w` descriptor,
+            # if one is present, is dropped together with its leading space.
+            candidate = value.strip().split(" ")[0].strip()
+            candidate = URL_SUFFIX.sub("", candidate)
+            if candidate and not is_external(candidate):
+                refs.add(candidate)
 
     for ref in sorted(refs):
         target = ref[2:] if ref.startswith("./") else ref

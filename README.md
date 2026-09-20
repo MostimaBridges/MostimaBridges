@@ -5,6 +5,9 @@
     它们挂掉不影响阅读。
   * dark / light 用 <picture> 切换，兜底的 <img> 一律指向 light 版本，
     这样不认 media query 的客户端也不会在浅色页面上出现一块黑图。
+  * srcset 里绝对不能出现裸逗号。HTML 用逗号分隔 srcset 的候选图，GitHub 会照做，
+    于是 "?i=py,ts,js" 只剩第一个候选 ":py"，整行只渲染出一个图标。带逗号的 URL
+    一律写成 %2C；check_readme.py 会拦这个。
   * <div align="center"> 里的 markdown 会被正常解析，那些空行别删。
   * 改完跑 python scripts/check_readme.py，这条也在 CI 里跑。
 -->
@@ -127,18 +130,18 @@
 
 <p align="center">
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://skillicons.dev/icons?i=py,ts,js,fastapi,postgres,sqlite,nginx,git&theme=dark&perline=8" />
-  <source media="(prefers-color-scheme: light)" srcset="https://skillicons.dev/icons?i=py,ts,js,fastapi,postgres,sqlite,nginx,git&theme=light&perline=8" />
-  <img src="https://skillicons.dev/icons?i=py,ts,js,fastapi,postgres,sqlite,nginx,git&theme=light&perline=8"
+  <source media="(prefers-color-scheme: dark)" srcset="https://skillicons.dev/icons?i=py%2Cts%2Cjs%2Cfastapi%2Cpostgres%2Csqlite%2Cnginx%2Cgit&theme=dark&perline=8" />
+  <source media="(prefers-color-scheme: light)" srcset="https://skillicons.dev/icons?i=py%2Cts%2Cjs%2Cfastapi%2Cpostgres%2Csqlite%2Cnginx%2Cgit&theme=light&perline=8" />
+  <img src="https://skillicons.dev/icons?i=py%2Cts%2Cjs%2Cfastapi%2Cpostgres%2Csqlite%2Cnginx%2Cgit&theme=light&perline=8"
        alt="Python、TypeScript、JavaScript、FastAPI、PostgreSQL、SQLite、Nginx、Git" />
 </picture>
 </p>
 
 <p align="center">
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://skillicons.dev/icons?i=pytorch,opencv,vue,vite,linux,windows,powershell,github&theme=dark&perline=8" />
-  <source media="(prefers-color-scheme: light)" srcset="https://skillicons.dev/icons?i=pytorch,opencv,vue,vite,linux,windows,powershell,github&theme=light&perline=8" />
-  <img src="https://skillicons.dev/icons?i=pytorch,opencv,vue,vite,linux,windows,powershell,github&theme=light&perline=8"
+  <source media="(prefers-color-scheme: dark)" srcset="https://skillicons.dev/icons?i=pytorch%2Copencv%2Cvue%2Cvite%2Clinux%2Cwindows%2Cpowershell%2Cgithub&theme=dark&perline=8" />
+  <source media="(prefers-color-scheme: light)" srcset="https://skillicons.dev/icons?i=pytorch%2Copencv%2Cvue%2Cvite%2Clinux%2Cwindows%2Cpowershell%2Cgithub&theme=light&perline=8" />
+  <img src="https://skillicons.dev/icons?i=pytorch%2Copencv%2Cvue%2Cvite%2Clinux%2Cwindows%2Cpowershell%2Cgithub&theme=light&perline=8"
        alt="PyTorch、OpenCV、Vue、Vite、Linux、Windows、PowerShell、GitHub" />
 </picture>
 </p>
