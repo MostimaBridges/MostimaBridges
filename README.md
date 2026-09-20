@@ -152,13 +152,11 @@
 </picture>
 </p>
 
-**AI 工具链**
-
 <p align="center">
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="./assets/icons/ai-tools-dark.svg" />
   <source media="(prefers-color-scheme: light)" srcset="./assets/icons/ai-tools-light.svg" />
-  <img src="./assets/icons/ai-tools-light.svg"
+  <img src="./assets/icons/ai-tools-light.svg" width="217" height="48"
        alt="GitHub Copilot、Codex、DSH、AstrBot" />
 </picture>
 </p>
