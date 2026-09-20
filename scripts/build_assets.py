@@ -758,7 +758,9 @@ AI_TOOLS = [
     },
     {
         "name": "AstrBot",
-        "tile": ("#FFFFFF", "#F4F2ED"),
+        # The mark is AstrBot's own blue, so it stays that blue in both themes;
+        # the tile is neutral, so it tracks the theme like Copilot's and Codex's.
+        "tile": ("#242938", "#F4F2ED"),
         "mark": ("#2f86bd", "#2f86bd"),
         "viewBox": "0 0 512 512",
         "paths": (
