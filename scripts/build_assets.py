@@ -707,6 +707,59 @@ def build_portrait(source_root: Path) -> Image.Image:
 
 
 # ─────────────────────────────────────────────────────────────────────────────
+# AI TOOLCHAIN ROW — self-hosted SVG
+#
+# skillicons has no id for any of these (every candidate returns the 256-byte
+# placeholder), and simple-icons only carries Copilot and DeepSeek; OpenAI has
+# had its mark removed. Rather than mix one real logo with two blanks, the whole
+# row is drawn here in one outline style and every tile is labelled, so the mark
+# is decoration and the name carries the meaning.
+# ─────────────────────────────────────────────────────────────────────────────
+
+AI_ROW_W, AI_ROW_H = 588, 78
+AI_TILE_W, AI_TILE_GAP = 132, 20
+
+AI_TOOLS = [
+    ("GitHub Copilot",
+     '<rect x="5" y="15" width="38" height="18" rx="9"/><path d="M24 15 V23"/>'),
+    ("Codex",
+     '<rect x="5" y="9" width="38" height="30" rx="5"/>'
+     '<path d="M13 20 L19 24 L13 28"/><path d="M25 28 H34"/>'),
+    ("DSH",
+     '<path d="M18 10 H10 V38 H18"/><path d="M30 10 H38 V38 H30"/>'
+     '<circle cx="24" cy="24" r="4"/>'),
+    ("AstrBot",
+     '<rect x="9" y="17" width="30" height="24" rx="7"/>'
+     '<path d="M24 17 V9"/><circle cx="24" cy="7" r="2.6"/>'
+     '<circle cx="18" cy="29" r="2.4" fill="CRIMSON" stroke="none"/>'
+     '<circle cx="30" cy="29" r="2.4" fill="CRIMSON" stroke="none"/>'),
+]
+
+
+def build_ai_tools_svg(pal: dict) -> str:
+    names = "、".join(n for n, _ in AI_TOOLS)
+    out = [
+        f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {AI_ROW_W} {AI_ROW_H}" '
+        f'width="{AI_ROW_W}" height="{AI_ROW_H}" role="img" aria-label="{names}">',
+        f'<g fill="none" stroke="{pal["crimson"]}" stroke-width="3.2" '
+        f'stroke-linecap="round" stroke-linejoin="round">',
+    ]
+    for i, (_, body) in enumerate(AI_TOOLS):
+        tx = i * (AI_TILE_W + AI_TILE_GAP) + (AI_TILE_W - 48) / 2
+        out.append(f'<g transform="translate({tx:.0f} 2)">{body.replace("CRIMSON", pal["crimson"])}</g>')
+    out.append("</g>")
+    for i, (name, _) in enumerate(AI_TOOLS):
+        cx = i * (AI_TILE_W + AI_TILE_GAP) + AI_TILE_W / 2
+        out.append(
+            f'<text x="{cx:.0f}" y="71" text-anchor="middle" font-size="14" '
+            f'font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" '
+            f'fill="{pal["muted"]}">{name}</text>'
+        )
+    out.append("</svg>")
+    return "".join(out)
+
+
+# ─────────────────────────────────────────────────────────────────────────────
 # MONOGRAM (SVG — pure geometry, crisp at any size, echoes the avatar mark)
 # ─────────────────────────────────────────────────────────────────────────────
 
@@ -745,7 +798,7 @@ def main() -> int:
     ap.add_argument("--source-root", type=Path, default=DEFAULT_SOURCE_ROOT,
                     help="read-only directory holding the source artwork (required)")
     ap.add_argument("--only", default="all",
-                    choices=["all", "hero", "cards", "divider", "portrait", "monogram"])
+                    choices=["all", "hero", "cards", "divider", "portrait", "icons", "monogram"])
     args = ap.parse_args()
 
     root = args.source_root
@@ -786,12 +839,17 @@ def main() -> int:
         else:
             print(f"  skipped (missing {PORTRAIT_SOURCE})", file=sys.stderr)
 
-    if args.only in ("all", "monogram"):
-        print("monogram:")
-        out = ASSETS / "icons" / "monogram.svg"
-        out.parent.mkdir(parents=True, exist_ok=True)
-        out.write_text(MONOGRAM_SVG, encoding="utf-8")
-        print(f"  {out.relative_to(REPO).as_posix():<44} {out.stat().st_size} B")
+    if args.only in ("all", "icons", "monogram"):
+        print("icons:")
+        for name, svg in (
+            ("monogram.svg", MONOGRAM_SVG),
+            ("ai-tools-dark.svg", build_ai_tools_svg(DARK)),
+            ("ai-tools-light.svg", build_ai_tools_svg(LIGHT)),
+        ):
+            out = ASSETS / "icons" / name
+            out.parent.mkdir(parents=True, exist_ok=True)
+            out.write_text(svg, encoding="utf-8")
+            print(f"  {out.relative_to(REPO).as_posix():<44} {out.stat().st_size} B")
 
     print("done.")
     return 0

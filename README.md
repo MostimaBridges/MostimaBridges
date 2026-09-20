@@ -152,9 +152,22 @@
 </picture>
 </p>
 
+**AI 工具链**
+
+<p align="center">
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="./assets/icons/ai-tools-dark.svg" />
+  <source media="(prefers-color-scheme: light)" srcset="./assets/icons/ai-tools-light.svg" />
+  <img src="./assets/icons/ai-tools-light.svg"
+       alt="GitHub Copilot、Codex、DSH、AstrBot" />
+</picture>
+</p>
+
 Python 和原生 JS 是主力，Vue / TypeScript 用在在线课程那套上。<br>
 模型侧跑 `llama.cpp` + GGUF，视觉侧是 YOLO + `ONNX Runtime`。<br>
 部署基本是 Nginx 加 Windows 服务，能搬去 Linux 的尽量搬。
+
+写代码基本都在 Copilot 和 Codex 里完成；DSH 和 AstrBot 是最近在折腾的 agent 方向。
 
 <p align="center">
 <picture>
