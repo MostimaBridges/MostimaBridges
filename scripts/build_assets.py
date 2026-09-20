@@ -30,6 +30,7 @@ Requires: Pillow >= 10 with WebP and FreeType support.
 from __future__ import annotations
 
 import argparse
+import math
 import sys
 from pathlib import Path
 
@@ -635,30 +636,73 @@ def build_divider(pal: dict) -> Image.Image:
 # ─────────────────────────────────────────────────────────────────────────────
 
 PORT_W, PORT_H = 340, 510
+# Measured from the source art, not guessed: the head sits at x = 0.545 W, is
+# about 0.63 W wide, and lands ~17.5% down a full-height crop.
+PORT_HEAD_X = 0.545
+# A sharp rhombus is only ~35% wide at that height, so it cannot hold a head
+# that is 63% wide. The exponent walks the outline from diamond (1.0) toward
+# ellipse (2.0); 1.30 keeps the diamond reading while clearing the head.
+PORT_SHAPE_P = 1.30
+# Nudges the artwork down into the wider part of the shape, which also brings
+# the character's halo fully into frame.
+PORT_OFFSET_Y = 30
+
+
+def superellipse_mask(size, p, ss=3) -> Image.Image:
+    """|u|^p + |v|^p <= 1. Build one quadrant, mirror it, then mirror the bottom half up."""
+    w, h = size
+    nw, nh = w * ss, h * ss
+    cx, cy = nw // 2, nh // 2
+    qw, qh = cx + 1, cy + 1
+
+    q = Image.new("L", (qw, qh), 0)
+    px = q.load()
+    inv = 1.0 / p
+    for y in range(qh):
+        v = y / (nh / 2.0)
+        vp = v ** p
+        if vp >= 1.0:
+            break
+        xmax = min(int(((1.0 - vp) ** inv) * (nw / 2.0)), qw - 1)
+        for x in range(xmax + 1):
+            px[x, y] = 255
+
+    full = Image.new("L", (nw, nh), 0)
+    full.paste(q, (cx, cy))
+    full.paste(q.transpose(Image.FLIP_LEFT_RIGHT), (cx - qw + 1, cy))
+    bottom = full.crop((0, cy, nw, nh))
+    full.paste(bottom.transpose(Image.FLIP_TOP_BOTTOM), (0, 0))
+    return full.resize(size, Image.LANCZOS)
 
 
 def build_portrait(source_root: Path) -> Image.Image:
     src = Image.open(source_root / PORTRAIT_SOURCE).convert("RGB")
     sw, sh = src.size
-    crop_w = int(sw * 0.34)
-    x0 = int(sw * 0.31)
-    src = src.crop((x0, 0, x0 + crop_w, sh))
 
-    ss = 4  # supersample the mask for clean edges
-    mask = Image.new("L", (PORT_W * ss, PORT_H * ss), 0)
-    w, h = PORT_W * ss, PORT_H * ss
-    ImageDraw.Draw(mask).polygon([(w // 2, 0), (w, h // 2), (w // 2, h), (0, h // 2)], fill=255)
-    mask = mask.resize((PORT_W, PORT_H), Image.LANCZOS).filter(ImageFilter.GaussianBlur(0.6))
+    # full-height crop whose horizontal centre lands on the head
+    crop_w = min(int(sh * PORT_W / PORT_H), sw)
+    x0 = max(0, min(sw - crop_w, int(PORT_HEAD_X * sw - crop_w / 2)))
+    art = src.crop((x0, 0, x0 + crop_w, sh)).resize((PORT_W, PORT_H), Image.LANCZOS)
+    if PORT_OFFSET_Y:
+        shifted = Image.new("RGB", (PORT_W, PORT_H), (0, 0, 0))
+        shifted.paste(art, (0, PORT_OFFSET_Y))
+        art = shifted
 
     out = Image.new("RGBA", (PORT_W, PORT_H), (0, 0, 0, 0))
-    out.paste(src.resize((PORT_W, PORT_H), Image.LANCZOS), (0, 0), mask)
+    out.paste(art, (0, 0), superellipse_mask((PORT_W, PORT_H), PORT_SHAPE_P))
 
+    # crimson edge, traced along the same superellipse so the two agree
     rim = Image.new("RGBA", (PORT_W, PORT_H), (0, 0, 0, 0))
     rd = ImageDraw.Draw(rim)
-    for inset, (r, g, b, a) in ((0, (225, 29, 92, 255)), (2, (255, 77, 126, 150)), (4, (139, 92, 246, 90))):
-        rd.polygon([(PORT_W // 2, inset), (PORT_W - inset, PORT_H // 2),
-                    (PORT_W // 2, PORT_H - inset), (inset, PORT_H // 2)],
-                   outline=(r, g, b, a), width=2)
+    for inset, col in ((0, (225, 29, 92, 255)), (2, (255, 77, 126, 140)), (4, (139, 92, 246, 80))):
+        pts = []
+        for i in range(241):
+            t = i / 240 * 2 * math.pi
+            ca, sa = math.cos(t), math.sin(t)
+            rad = (abs(ca) ** PORT_SHAPE_P + abs(sa) ** PORT_SHAPE_P) ** (-1.0 / PORT_SHAPE_P)
+            pts.append((PORT_W / 2 + ca * rad * (PORT_W / 2 - inset),
+                        PORT_H / 2 + sa * rad * (PORT_H / 2 - inset)))
+        rd.line(pts, fill=col, width=2)
     return Image.alpha_composite(out, rim)
 
 

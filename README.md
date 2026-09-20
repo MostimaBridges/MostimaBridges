@@ -1,8 +1,8 @@
 <!--
   维护说明
   ========
-  * 图片全部放在 assets/ 下自己托管。只有 typing 副标题、Skill Icons 和徽章
-    走第三方，它们挂掉不影响阅读。
+  * 图片全部放在 assets/ 下自己托管。只有 typing 副标题和 Skill Icons 走第三方，
+    它们挂掉不影响阅读。
   * dark / light 用 <picture> 切换，兜底的 <img> 一律指向 light 版本，
     这样不认 media query 的客户端也不会在浅色页面上出现一块黑图。
   * <div align="center"> 里的 markdown 会被正常解析，那些空行别删。
@@ -45,11 +45,9 @@
 <!-- ============================ 关于我 ============================ -->
 ## // 关于我
 
-主要在做 AI 应用。云端 API 和本地 GGUF 模型走同一套接口，路由、回退、流式输出、额度控制这些都得自己写。
-比起把模型调通，我更在意它跑起来之后稳不稳。
+主要在做 AI 应用。云端 API 和本地 GGUF 模型走同一套接口，路由、回退、流式输出、额度控制这些都得自己写。比起把模型调通，我更在意它跑起来之后稳不稳。
 
-另外有一套电路识别的项目，从拍照到还原拓扑，规则引擎和 LLM 各管一段。
-平时 Windows 上用得多，但部署尽量保持 Linux 也能跑。
+另外有一套电路识别的项目，从拍照到还原拓扑，规则引擎和 LLM 各管一段。平时 Windows 上用得多，但部署尽量保持 Linux 也能跑。
 
 <p align="center">
 <picture>
@@ -91,8 +89,7 @@
 
 #### TESSERA · 多服务 AI 平台 `私有`
 
-三个 FastAPI 服务放在一个反向代理后面，核心是自己写的一套 LLM 服务层。
-后台改完 provider 配置，下一次请求就生效，不用重启。
+三个 FastAPI 服务放在一个反向代理后面，核心是自己写的一套 LLM 服务层。后台改完 provider 配置，下一次请求就生效，不用重启。
 
 - 云端和本地模型走同一套流式接口，一边不通就换另一边
 - 熔断器把「忙」和「坏」分开看，节点排队时不会直接判死
@@ -110,8 +107,7 @@
 
 #### AURORA · 电路识别与拓扑还原 `私有`
 
-一开始只是想把课堂电路图识别出来。做下去才发现，认出元件不难，
-难的是把导线关系还原成一张靠谱的拓扑图。
+一开始只是想把课堂电路图识别出来。做下去才发现，认出元件不难，难的是把导线关系还原成一张靠谱的拓扑图。
 
 - 证据不够就不猜。宁可返回「未知」，也不编一条看起来合理的边
 - 导线用并查集聚类，环路用 Prim MST 收，避免连线在图上乱飞
@@ -145,12 +141,8 @@
 </picture>
 </p>
 
-- **AI / LLM** — `Python` · `FastAPI` · `llama.cpp` · `GGUF` · SSE 流式
-- **前端** — `JavaScript` · `TypeScript` · `Vue` · Canvas
-- **视觉 / 模型** — `YOLO` · `PyTorch` · `ONNX Runtime` · `OpenCV`
-- **数据 / 基建** — `PostgreSQL` · `SQLite` · `Nginx` · `PowerShell` · `Linux`
-
-写顺手的是 Python 和原生 JS，Vue 和 TypeScript 用在在线课程那套上。
+Python 和原生 JS 是主力，Vue / TypeScript 用在在线课程那套上。<br>
+模型侧跑 `llama.cpp` + GGUF，视觉侧是 YOLO + `ONNX Runtime`。<br>
 部署基本是 Nginx 加 Windows 服务，能搬去 Linux 的尽量搬。
 
 <p align="center">
@@ -183,21 +175,18 @@
 </picture>
 </p>
 
-<!-- ============================ 找到我 ============================ -->
-## // 找到我
+<!-- ============================= 说明 ============================= -->
+## // 说明
 
 <div align="center">
 
-<img src="./assets/misc/strand-portrait.webp" width="170"
-     alt="自设角色的半身像，裁成菱形并镶了一道暗红描边。" />
+<img src="./assets/misc/strand-portrait.webp" width="180"
+     alt="自设角色的半身像，裁成柔和的菱形并镶了一道暗红描边。" />
 
-两个项目都是私有仓库，源码不方便公开。想聊多模型服务、本地推理，
-或者视觉加规则这类东西，在 GitHub 上找我就行。
+上面两个项目都是私有仓库，源码不方便公开，这里只写了做法。
 
-[![GitHub](https://img.shields.io/badge/GitHub-MostimaBridges-E11D5C?style=flat-square&labelColor=1A1027&logo=github&logoColor=white)](https://github.com/MostimaBridges)
+标题图、项目卡、分隔线和 monogram 都由 <a href="./scripts/build_assets.py">scripts/build_assets.py</a> 生成，配色只维护那一处。
 
 <img src="./assets/icons/monogram.svg" width="34" alt="" />
 
 </div>
-
-<sub>标题图、项目卡、分隔线和 monogram 都由 <a href="./scripts/build_assets.py">scripts/build_assets.py</a> 生成，配色只维护那一处。</sub>
