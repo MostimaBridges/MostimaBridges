@@ -58,4 +58,22 @@ jobs:
             exit 0
           fi
           git commit -m "chore(assets): regenerate contribution snake [skip ci]"
-          git push
+
+          # The daily schedule, a push, and a manual dispatch can overlap, and
+          # the concurrency group only serialises them on a best-effort basis.
+          # A run that lost the race rebases onto whatever landed meanwhile and
+          # retries; if the same artwork is already upstream the rebase drops
+          # our commit and there is simply nothing left to push.
+          for attempt in 1 2 3; do
+            if git push; then
+              exit 0
+            fi
+            echo "push rejected (attempt $attempt) - rebasing onto origin/main"
+            git pull --rebase --autostash origin main
+            if git diff --quiet origin/main -- assets/generated; then
+              echo "another run already committed the same assets - nothing to push"
+              exit 0
+            fi
+          done
+          echo "still could not push the generated assets" >&2
+          exit 1
