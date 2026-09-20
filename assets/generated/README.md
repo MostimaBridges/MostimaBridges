@@ -16,5 +16,14 @@ project cards:
 | dark | `#8B5CF6` violet | `#1A1027` `#3D1B3A` `#7A1F45` `#C3134D` `#FF4D7E` |
 | light | `#6D3FD1` violet | `#EFE9F6` `#F0C9DA` `#DC93B4` `#C2185B` `#8A1043` |
 
-This file exists so the directory is present in a fresh checkout and so the
-workflow's `git add assets/generated` has something to track on the first run.
+The two SVGs are committed so the profile page renders before the workflow has
+ever run. They were bootstrapped locally with the same library the action wraps
+(`generate-snake-animation@3.5.0` on npm, the `packages/generate-snake-animation`
+workspace of `Platane/snk` v3.5.0), driven against the public contribution
+calendar instead of the GraphQL API. After the first push the action owns them
+and will rewrite the pair whenever the calendar changes.
+
+Each file is a CSS-animated SVG (`@keyframes`, no `<script>`), so it still
+animates when GitHub loads it through an `<img>` tag, and the first frame is a
+complete contribution grid — which matters because GitHub puts a pause control
+on animated images.
