@@ -142,6 +142,30 @@ def mono(size: int, bold: bool = False):
     return load_font(_MONO_BOLD if bold else _MONO, size)
 
 
+# Chinese UI face. Noto Sans SC is a variable font, so the weight is selectable;
+# it also carries Latin glyphs, which keeps mixed strings like "本地 + 云端"
+# on one consistent face instead of falling back to a generic sans.
+_CJK = ["NotoSansSC-VF.ttf", "msyhbd.ttc", "msyh.ttc", "simhei.ttf"]
+
+
+def sans(size: int, weight: str = "Medium"):
+    for name in _CJK:
+        path = FONT_DIR / name
+        if not path.exists():
+            continue
+        try:
+            font = ImageFont.truetype(str(path), size)
+        except OSError:
+            continue
+        if "-VF" in name:
+            try:
+                font.set_variation_by_name(weight)
+            except (OSError, ValueError):
+                pass
+        return font
+    return load_font(_MONO, size)
+
+
 # ─────────────────────────────────────────────────────────────────────────────
 # DRAWING PRIMITIVES
 # ─────────────────────────────────────────────────────────────────────────────
@@ -347,20 +371,20 @@ def build_hero(pal: dict, source_root: Path) -> Image.Image:
 
     # ── focus readout: the who / what / which-direction payload ────────────
     y = 440
-    for label, value in (("CORE", "AI / LLM SYSTEMS"),
-                         ("EDGE", "LOCAL + CLOUD INFERENCE"),
-                         ("SHIP", "FULL-STACK SERVICES")):
-        draw_tracked(canvas, (PAD, y + 4), label, mono(24), rgb(pal["crimson"]), tracking=2.4)
-        draw_tracked(canvas, (PAD + 112, y - 3), value, mono(28), rgb(pal["text"]), tracking=0.6)
+    for label, value in (("方向", "AI · LLM 系统"),
+                         ("推理", "本地 + 云端"),
+                         ("交付", "全栈服务")):
+        draw_tracked(canvas, (PAD, y + 5), label, sans(24, "Bold"), rgb(pal["crimson"]), tracking=3.0)
+        draw_tracked(canvas, (PAD + 96, y - 4), value, sans(31), rgb(pal["text"]), tracking=1.0)
         y += 50
 
     # ── bottom strip ───────────────────────────────────────────────────────
     by = HERO_H - 70
     hairline(d, PAD, by, PANEL_W - PAD, by, pal["line"], 200, 2)
-    draw_tracked(canvas, (PAD, by + 22), "STATUS", mono(22), rgb(pal["muted"]), tracking=2.6)
-    d.ellipse([PAD + 106, by + 30, PAD + 122, by + 46], fill=rgba(pal["ember"], 255))
-    draw_tracked(canvas, (PAD + 136, by + 22), "BUILDING", mono(22), rgb(pal["ember"]), tracking=2.6)
-    draw_tracked(canvas, (PANEL_W - PAD - 56, by + 22), "01", mono(22, bold=True),
+    draw_tracked(canvas, (PAD, by + 23), "状态", sans(22, "Bold"), rgb(pal["muted"]), tracking=3.0)
+    d.ellipse([PAD + 66, by + 31, PAD + 80, by + 45], fill=rgba(pal["ember"], 255))
+    draw_tracked(canvas, (PAD + 94, by + 23), "持续更新", sans(22, "Bold"), rgb(pal["ember"]), tracking=3.0)
+    draw_tracked(canvas, (PANEL_W - PAD - 40, by + 23), "01", mono(22, bold=True),
                  rgb(pal["muted"]), tracking=2.6)
 
     return canvas.convert("RGB")
@@ -390,12 +414,12 @@ def card_shell(pal: dict, index: str, chip: str) -> Image.Image:
     d.rectangle([0, 0, CARD_W, 62], fill=rgb(pal["surface"]) + (255,))
     hairline(d, 0, 62, CARD_W, 62, pal["crimson"], 170, 3)
     draw_tracked(canvas, (44, 16), index, mono(28, bold=True), rgb(pal["crimson"]), tracking=1.4)
-    draw_tracked(canvas, (100, 21), "// SELECTED WORK", mono(22), rgb(pal["muted"]), tracking=3.0)
+    draw_tracked(canvas, (100, 20), "// 项目", sans(23, "Bold"), rgb(pal["muted"]), tracking=3.0)
 
-    cw = measure(d, chip, mono(22), 2.6)
+    cw = measure(d, chip, sans(23), 2.6)
     bx1, bx0 = CARD_W - 44, CARD_W - 44 - cw - 44
     d.rounded_rectangle([bx0, 11, bx1, 51], radius=6, outline=rgba(pal["crimson"], 200), width=2)
-    draw_tracked(canvas, (bx0 + 22, 21), chip, mono(22), rgb(pal["crimson"]), tracking=2.6)
+    draw_tracked(canvas, (bx0 + 22, 20), chip, sans(23, "Bold"), rgb(pal["crimson"]), tracking=2.6)
 
     corner_brackets(d, (20, 84, CARD_W - 20, CARD_H - 20), pal["crimson"], length=26, width=3, alpha=120)
     return canvas
@@ -403,21 +427,21 @@ def card_shell(pal: dict, index: str, chip: str) -> Image.Image:
 
 def card_bullets(canvas: Image.Image, pal: dict, bullets: list[str], x: int, y: int, width: int) -> None:
     d = ImageDraw.Draw(canvas)
-    font = mono(BULLET_SIZE)
+    font = sans(BULLET_SIZE)
     for line in bullets:
         marker_triangle(d, x + 6, y + 13, 7, pal["crimson"])
         cur = ""
         for word in line.split():
             probe = f"{cur} {word}".strip()
             if measure(d, probe, font) > width and cur:
-                draw_tracked(canvas, (x + 30, y), cur, font, rgb(pal["text"]), tracking=0.3)
-                y += 34
+                draw_tracked(canvas, (x + 30, y), cur, font, rgb(pal["text"]), tracking=0.5)
+                y += 40
                 cur = word
             else:
                 cur = probe
         if cur:
-            draw_tracked(canvas, (x + 30, y), cur, font, rgb(pal["text"]), tracking=0.3)
-        y += 46
+            draw_tracked(canvas, (x + 30, y), cur, font, rgb(pal["text"]), tracking=0.5)
+        y += 52
 
 
 def card_header(canvas: Image.Image, pal: dict, title: str, subtitle: str) -> int:
@@ -425,8 +449,8 @@ def card_header(canvas: Image.Image, pal: dict, title: str, subtitle: str) -> in
     font = fit_font(d, title, display, 840, start=78)
     draw_tracked_gradient(canvas, (44, 92), title, font, pal["text"], pal["crimson"], tracking=font.size * 0.03)
     y = 92 + int(font.size * 1.05)
-    draw_tracked(canvas, (44, y), subtitle, mono(28), rgb(pal["rose"]), tracking=1.0)
-    y += 48
+    draw_tracked(canvas, (44, y), subtitle, sans(30), rgb(pal["rose"]), tracking=1.4)
+    y += 52
     hairline(d, 44, y, 820, y, pal["line"], 255, 2)
     hairline(d, 44, y, 116, y, pal["crimson"], 255, 5)
     return y + 26
@@ -445,17 +469,18 @@ def diagram_box(d, pal, box, label, sub=None, accent=False) -> None:
     ink = rgb(pal["crimson"] if accent else pal["text"])
     wide = (x1 - x0) - 20
 
-    f = fit_font(d, label, lambda s: mono(s, bold=accent), wide, start=26, tracking=1.6, floor=15)
-    if f.size < 22:
+    f = fit_font(d, label, lambda s: sans(s, "Bold" if accent else "Medium"), wide,
+                 start=27, tracking=1.4, floor=17)
+    if f.size < 23:
         print(f"    WARN diagram label shrunk to {f.size}px: {label!r}", file=sys.stderr)
     if sub:
-        d.text((cx - measure(d, label, f, 1.6) / 2, y0 + 12), label, font=f, fill=ink)
-        fs = fit_font(d, sub, mono, wide - 4, start=22, tracking=1.2, floor=20)
+        d.text((cx - measure(d, label, f, 1.4) / 2, y0 + 13), label, font=f, fill=ink)
+        fs = fit_font(d, sub, sans, wide - 4, start=23, tracking=1.0, floor=18)
         if fs.size < 21:
             print(f"    WARN diagram sub shrunk to {fs.size}px: {sub!r}", file=sys.stderr)
-        d.text((cx - measure(d, sub, fs, 1.2) / 2, y0 + 48), sub, font=fs, fill=rgb(pal["muted"]))
+        d.text((cx - measure(d, sub, fs, 1.0) / 2, y0 + 48), sub, font=fs, fill=rgb(pal["muted"]))
     else:
-        d.text((cx - measure(d, label, f, 1.6) / 2, y0 + BOX_H / 2 - 16), label, font=f, fill=ink)
+        d.text((cx - measure(d, label, f, 1.4) / 2, y0 + BOX_H / 2 - 16), label, font=f, fill=ink)
 
 
 def check_geometry(where: str) -> None:
@@ -494,46 +519,47 @@ def diagram_panel(canvas: Image.Image, pal: dict, caption: str, tech: str) -> in
     d.rounded_rectangle([PANEL_LEFT, 84, CARD_W - 44, CARD_H - 44], radius=10,
                         outline=rgba(pal["line"], 150), width=2, fill=rgba(pal["void"], 90))
     avail = (CARD_W - 44) - X0 - 8
-    for text, y, start, track in ((caption, 104, 22, 3.2), (tech, CARD_H - 74, 22, 0.6)):
-        f = fit_font(d, text, mono, avail, start=start, tracking=track, floor=18)
-        if f.size < 22:
+    for text, y, factory, start, track in ((caption, 104, lambda s: sans(s, "Bold"), 23, 3.0),
+                                           (tech, CARD_H - 74, mono, 22, 0.6)):
+        f = fit_font(d, text, factory, avail, start=start, tracking=track, floor=18)
+        if f.size < 21:
             print(f"    WARN panel text shrunk to {f.size}px: {text!r}", file=sys.stderr)
         draw_tracked(canvas, (X0, y), text, f, rgb(pal["muted"]), tracking=track)
     return X0
 
 
 def build_card_tessera(pal: dict) -> Image.Image:
-    canvas = card_shell(pal, "01", "PRIVATE SOURCE")
-    y = card_header(canvas, pal, "TESSERA", "Multi-service AI platform")
+    canvas = card_shell(pal, "01", "私有仓库")
+    y = card_header(canvas, pal, "TESSERA", "多服务 AI 平台")
     card_bullets(canvas, pal, [
-        "One provider interface over cloud APIs and local GGUF nodes",
-        "Circuit breaker, capacity queues, quota reserve -> settle",
-        "In-band metadata parsed out of the token stream",
-        "Persona release gate with verbatim-leakage scanning",
-        "Layered local-node transport attestation, 8 checkpoints",
+        "云端和本地 GGUF 走同一套 provider 接口",
+        "熔断、排队、每日额度，按账本管",
+        "流式输出里夹带的元数据，边收边剥离",
+        "角色设定：编译 → 发布 → 泄漏检查",
+        "运维面：迁移、保留期清理、运行时设置",
     ], 44, y, BULLET_W)
 
-    X0 = diagram_panel(canvas, pal, "REQUEST PATH",
+    X0 = diagram_panel(canvas, pal, "一次请求的路径",
                        "asyncio · httpx · FastAPI · SQLAlchemy · Postgres")
     d = ImageDraw.Draw(canvas)
     r1, r2, r3, r4 = (DIAGRAM_TOP + i * ROW_PITCH for i in range(4))
     b = lambda x, y, w: (X0 + x, y, X0 + x + w, y + BOX_H)  # noqa: E731
 
-    diagram_box(d, pal, b(0, r1, 348), "CLIENTS", "webchat + personal api")
-    diagram_box(d, pal, b(388, r1, 404), "GATEWAY", "admission · quota · budget", accent=True)
+    diagram_box(d, pal, b(0, r1, 348), "客户端", "网页对话 · 个人 API")
+    diagram_box(d, pal, b(388, r1, 404), "网关", "准入 · 配额 · 预算", accent=True)
     arrow(d, pal, (X0 + 348, r1 + BOX_H / 2), (X0 + 388, r1 + BOX_H / 2))
 
-    diagram_box(d, pal, b(388, r2, 404), "REGISTRY", "per-request snapshot")
+    diagram_box(d, pal, b(388, r2, 404), "注册表", "按请求取 provider 快照")
     arrow(d, pal, (X0 + 590, r1 + BOX_H), (X0 + 590, r2))
 
-    diagram_box(d, pal, b(40, r3, 330), "LOCAL NODE", "llama.cpp · gguf")
-    diagram_box(d, pal, b(410, r3, 330), "CLOUD", "openai-compatible")
+    diagram_box(d, pal, b(40, r3, 330), "本地节点", "llama.cpp · GGUF")
+    diagram_box(d, pal, b(410, r3, 330), "云端", "OpenAI 兼容")
     arrow(d, pal, (X0 + 480, r2 + BOX_H), (X0 + 205, r3))
     arrow(d, pal, (X0 + 700, r2 + BOX_H), (X0 + 575, r3))
     arrow(d, pal, (X0 + 370, r3 + BOX_H / 2), (X0 + 410, r3 + BOX_H / 2))
 
-    diagram_box(d, pal, b(40, r4, 330), "CIRCUIT BREAKER", "busy != failure")
-    diagram_box(d, pal, b(410, r4, 330), "FALLBACK CHAIN", "ordered · telemetry")
+    diagram_box(d, pal, b(40, r4, 330), "熔断器", "忙不算故障")
+    diagram_box(d, pal, b(410, r4, 330), "回退链", "有序 · 带遥测")
     arrow(d, pal, (X0 + 205, r3 + BOX_H), (X0 + 205, r4))
     arrow(d, pal, (X0 + 575, r3 + BOX_H), (X0 + 575, r4))
     check_geometry("tessera")
@@ -541,38 +567,38 @@ def build_card_tessera(pal: dict) -> Image.Image:
 
 
 def build_card_aurora(pal: dict) -> Image.Image:
-    canvas = card_shell(pal, "02", "PRIVATE SOURCE")
-    y = card_header(canvas, pal, "AURORA", "Circuit vision & topology engine")
+    canvas = card_shell(pal, "02", "私有仓库")
+    y = card_header(canvas, pal, "AURORA", "电路识别与拓扑还原")
     card_bullets(canvas, pal, [
-        "Rule engine abstains rather than guessing at topology",
-        "Union-find clustering plus Prim MST cycle construction",
-        "Per-edge provenance ledger and full decision trace",
-        "PCA axis gate for series / parallel, DSU safety check",
-        "Browser YOLO: WebGPU to threaded WASM in a worker",
+        "规则引擎说不准就不猜，宁可少连一根",
+        "导线用并查集聚类，环路用 Prim MST 收尾",
+        "每条边都记着为什么存在，错了能回溯",
+        "串并联看主轴方向，另外带一道短路校验",
+        "浏览器里跑 YOLO，WebGPU 不行就退 WASM",
     ], 44, y, BULLET_W)
 
-    X0 = diagram_panel(canvas, pal, "PHOTO -> STRUCTURED CIRCUIT",
+    X0 = diagram_panel(canvas, pal, "照片 → 结构化电路",
                        "ultralytics · torch · onnxruntime · tensorrt · ort-web")
     d = ImageDraw.Draw(canvas)
     r1, r2, r3, r4 = (DIAGRAM_TOP + i * ROW_PITCH for i in range(4))
     b = lambda x, y, w: (X0 + x, y, X0 + x + w, y + BOX_H)  # noqa: E731
 
-    diagram_box(d, pal, b(0, r1, 268), "PHOTO", "classroom photo")
-    diagram_box(d, pal, b(308, r1, 442), "DETECTOR", "pt / onnx / tensorrt", accent=True)
+    diagram_box(d, pal, b(0, r1, 268), "照片", "课堂实验")
+    diagram_box(d, pal, b(308, r1, 442), "检测器", "PT / ONNX / TensorRT", accent=True)
     arrow(d, pal, (X0 + 268, r1 + BOX_H / 2), (X0 + 308, r1 + BOX_H / 2))
 
-    diagram_box(d, pal, b(40, r2, 330), "RULE ENGINE", "deterministic")
-    diagram_box(d, pal, b(410, r2, 330), "LLM LAYER", "cloud + local gguf")
+    diagram_box(d, pal, b(40, r2, 330), "规则引擎", "确定性 · 可解释")
+    diagram_box(d, pal, b(410, r2, 330), "LLM 层", "云端 + 本地 GGUF")
     arrow(d, pal, (X0 + 420, r1 + BOX_H), (X0 + 205, r2))
     arrow(d, pal, (X0 + 590, r1 + BOX_H), (X0 + 575, r2))
 
-    diagram_box(d, pal, b(160, r3, 428), "NODES + EDGES", "one json contract", accent=True)
+    diagram_box(d, pal, b(160, r3, 428), "nodes + edges", "同一份 JSON 契约", accent=True)
     arrow(d, pal, (X0 + 205, r2 + BOX_H), (X0 + 300, r3))
     arrow(d, pal, (X0 + 575, r2 + BOX_H), (X0 + 448, r3))
 
-    for bx, label, sub in ((40, "CANVAS", "editable"),
-                           (292, "EXPORT", "png · json"),
-                           (544, "EXPLAIN", "decision path")):
+    for bx, label, sub in ((40, "画布", "可编辑"),
+                           (292, "导出", "PNG · JSON"),
+                           (544, "解释", "决策路径")):
         diagram_box(d, pal, b(bx, r4, 236), label, sub)
     for cx in (X0 + 158, X0 + 410, X0 + 662):
         arrow(d, pal, (X0 + 374, r3 + BOX_H), (cx, r4))
@@ -682,8 +708,8 @@ def main() -> int:
     if root is None:
         ap.print_usage()
         print("ERROR: --source-root is required.  Point it at the read-only directory\n"
-              "       that contains the hero artwork and the OC portrait.\n"
-              "       Example: python build_assets.py --source-root C:/Users/you/稿",
+              "       holding the hero artwork and the OC portrait, e.g.\n"
+              "       python scripts/build_assets.py --source-root /path/to/artwork",
               file=sys.stderr)
         return 1
 

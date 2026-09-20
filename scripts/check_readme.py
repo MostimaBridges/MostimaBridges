@@ -141,7 +141,13 @@ def check_readme() -> None:
     refs: set[str] = set()
     for attr in ("src", "srcset", "href"):
         for m in re.finditer(rf"\b{attr}\s*=\s*\"([^\"]+)\"", text):
-            for part in m.group(1).split(","):
+            value = m.group(1)
+            # srcset is a comma-separated candidate list, but a comma is also
+            # legal inside a URL — skillicons.dev uses `?i=py,ts,js`. Only split
+            # where a comma is followed by whitespace, which is the descriptor
+            # separator in real srcset syntax.
+            parts = re.split(r",\s+", value) if attr == "srcset" else [value]
+            for part in parts:
                 candidate = part.strip().split(" ")[0].strip()
                 candidate = URL_SUFFIX.sub("", candidate)
                 if candidate and not is_external(candidate):
@@ -177,6 +183,50 @@ def check_readme() -> None:
 
     if "TODO(USER)" in raw or "TODO:" in raw:
         err("README.md still contains a TODO marker")
+
+    check_tone(text)
+
+
+# Marketing register and LLM-summary sentence shapes. These are warnings, not
+# errors: any single one can be legitimate, but a page that accumulates them
+# reads like generated copy instead of a person's own page.
+TONE_PATTERNS = [
+    (r"端到端", "宣传词「端到端」"),
+    (r"生产级", "宣传词「生产级」"),
+    (r"企业级", "宣传词「企业级」"),
+    (r"强大的", "宣传词「强大的」"),
+    (r"先进的", "宣传词「先进的」"),
+    (r"全面的", "宣传词「全面的」"),
+    (r"高性能", "宣传词「高性能」"),
+    (r"高度可靠", "宣传词「高度可靠」"),
+    (r"鲁棒", "宣传词「鲁棒」"),
+    (r"无缝", "宣传词「无缝」"),
+    (r"赋能", "宣传词「赋能」"),
+    (r"核心能力", "总结腔「核心能力」"),
+    (r"技术亮点", "总结腔「技术亮点」"),
+    (r"工程实践", "总结腔「工程实践」"),
+    (r"架构层面", "总结腔「架构层面」"),
+    (r"值得注意", "总结腔「值得注意」"),
+    (r"与此同时", "总结腔「与此同时」"),
+    (r"综上所述", "总结腔「综上所述」"),
+    (r"该系统", "总结腔「该系统」"),
+    (r"该项目采用", "总结腔「该项目采用」"),
+    (r"不是[^。；\n]{1,24}而是", "AI 高频句式「不是……而是……」"),
+    (r"不仅[^。；\n]{1,24}而且", "AI 高频句式「不仅……而且……」"),
+    (r"(?i)\bend-to-end\b", 'marketing word "end-to-end"'),
+    (r"(?i)\bproduction-grade\b", 'marketing word "production-grade"'),
+    (r"(?i)\brobust\b", 'marketing word "robust"'),
+    (r"(?i)\bseamless\b", 'marketing word "seamless"'),
+    (r"(?i)\bcomprehensive\b", 'marketing word "comprehensive"'),
+    (r"(?i)\bcutting-edge\b", 'marketing word "cutting-edge"'),
+    (r"(?i)\bpowerful\b", 'marketing word "powerful"'),
+]
+
+
+def check_tone(text: str) -> None:
+    for pattern, label in TONE_PATTERNS:
+        for m in re.finditer(pattern, text):
+            warn(f"tone: {label} -> {m.group(0)!r}")
 
 
 def is_decorative(tag: str) -> bool:

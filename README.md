@@ -1,27 +1,12 @@
 <!--
-  MAINTAINING THIS FILE
-  =====================
-  * Every image is self-hosted under assets/. Only the typing subtitle and the
-    GitHub badge are third-party; if either disappears the page still reads
-    correctly, because the same information is in the prose.
-  * Dark/light switching uses <picture> + prefers-color-scheme with the LIGHT
-    variant as the plain <img> fallback, so clients that ignore the media query
-    (notably the GitHub mobile app) land on the default theme rather than a
-    dark poster on a white page.
-  * Markdown inside <div align="center"> IS parsed by GitHub, because a
-    CommonMark HTML block ends at a blank line. Keep those blank lines. Never
-    put markdown inside <p align="center">: the <p> closes at the first blank
-    line and the content falls out of the centring.
-  * Assets are committed to this repo, so they are served straight from
-    raw.githubusercontent.com and are NOT proxied through GitHub's camo cache.
-    Push the new file and it appears; there is no long-lived cache to bust.
-  * The article column measures 846 CSS px on desktop, so every asset is
-    1692 px wide — exactly 2x — and its type is sized in display pixels then
-    doubled. Keep that ratio when regenerating.
-  * GitHub puts a pause control on animated images, so the snake is generated
-    with a complete first frame.
-  * Regenerate artwork:  python scripts/build_assets.py
-  * Validate the page:   python scripts/check_readme.py
+  维护说明
+  ========
+  * 图片全部放在 assets/ 下自己托管。只有 typing 副标题、Skill Icons 和徽章
+    走第三方，它们挂掉不影响阅读。
+  * dark / light 用 <picture> 切换，兜底的 <img> 一律指向 light 版本，
+    这样不认 media query 的客户端也不会在浅色页面上出现一块黑图。
+  * <div align="center"> 里的 markdown 会被正常解析，那些空行别删。
+  * 改完跑 python scripts/check_readme.py，这条也在 CI 里跑。
 -->
 
 <!-- ============================== HERO ============================== -->
@@ -31,21 +16,20 @@
   <source media="(prefers-color-scheme: dark)" srcset="./assets/hero/hero-dark.webp" />
   <source media="(prefers-color-scheme: light)" srcset="./assets/hero/hero-light.webp" />
   <img src="./assets/hero/hero-light.webp" width="100%"
-       alt="MostimaBridges title card: AI / LLM systems, local + cloud inference, full-stack services — set over key art of a silver-haired figure with a scythe before a crimson moon." />
+       alt="MostimaBridges 标题卡：AI · LLM 系统、本地 + 云端推理、全栈服务，配血色月亮前的持镰角色插画。" />
 </picture>
 
 **Strands** · [@MostimaBridges](https://github.com/MostimaBridges)
 
-把 AI 系统从模型接口一路做到能上线 —— 多 Provider 编排、本地推理、后端服务、前端与部署。
-**AI systems, end to end — provider orchestration, local inference, backend services, frontend, deployment.**
+主要在做 AI 应用和本地模型，顺手把几个自己天天要用的东西做成了能跑起来的样子。
 
 <picture>
   <source media="(prefers-color-scheme: dark)"
-          srcset="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&weight=500&size=18&duration=2800&pause=900&color=FF4D7E&center=true&vCenter=true&width=880&height=44&lines=Multi-provider+LLM+routing+%2F+cloud+fallback+%2B+local+GGUF%3BResilience%3A+circuit+breaking%2C+capacity+queues%2C+quota+ledgers%3BStreaming+state+machines+%2B+structured-output+contracts%3BPhoto+to+validated+circuit+graph%2C+rules+in+front+of+the+LLM%3BFastAPI+%2F+Postgres+%2F+Nginx+%2F+vanilla+JS+%2F+Vue+%2F+PyTorch" />
+          srcset="https://readme-typing-svg.demolab.com?font=Noto+Sans+SC&weight=500&size=19&duration=2600&pause=800&center=true&vCenter=true&width=900&height=46&color=FF4D7E&lines=%E5%9C%A8%E6%8A%98%E8%85%BE%E6%9C%AC%E5%9C%B0%E6%A8%A1%E5%9E%8B%E5%92%8C%20AI%20%E5%BA%94%E7%94%A8%3B%E6%8A%8A%E8%83%BD%E8%B7%91%E7%9A%84%20Demo%20%E6%85%A2%E6%85%A2%E6%94%B9%E6%88%90%E7%9C%9F%E7%9A%84%E7%B3%BB%E7%BB%9F%3B%E7%BB%8F%E5%B8%B8%E5%92%8C%20Nginx%E3%80%81Windows%E3%80%81CUDA%20%E6%89%93%E4%BA%A4%E9%81%93%3B%E6%9C%80%E8%BF%91%E5%9C%A8%E7%9C%8B%E7%94%B5%E8%B7%AF%E8%AF%86%E5%88%AB%E5%92%8C%E5%A4%9A%E6%A8%A1%E5%9E%8B%E8%B7%AF%E7%94%B1" />
   <source media="(prefers-color-scheme: light)"
-          srcset="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&weight=500&size=18&duration=2800&pause=900&color=C2185B&center=true&vCenter=true&width=880&height=44&lines=Multi-provider+LLM+routing+%2F+cloud+fallback+%2B+local+GGUF%3BResilience%3A+circuit+breaking%2C+capacity+queues%2C+quota+ledgers%3BStreaming+state+machines+%2B+structured-output+contracts%3BPhoto+to+validated+circuit+graph%2C+rules+in+front+of+the+LLM%3BFastAPI+%2F+Postgres+%2F+Nginx+%2F+vanilla+JS+%2F+Vue+%2F+PyTorch" />
-  <img src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&weight=500&size=18&duration=2800&pause=900&color=C2185B&center=true&vCenter=true&width=880&height=44&lines=Multi-provider+LLM+routing+%2F+cloud+fallback+%2B+local+GGUF%3BResilience%3A+circuit+breaking%2C+capacity+queues%2C+quota+ledgers%3BStreaming+state+machines+%2B+structured-output+contracts%3BPhoto+to+validated+circuit+graph%2C+rules+in+front+of+the+LLM%3BFastAPI+%2F+Postgres+%2F+Nginx+%2F+vanilla+JS+%2F+Vue+%2F+PyTorch"
-       alt="Multi-provider LLM routing with cloud fallback and local GGUF; circuit breaking, capacity queues, quota ledgers; streaming state machines and structured-output contracts; photo to validated circuit graph; FastAPI, Postgres, Nginx, vanilla JS, Vue, PyTorch." />
+          srcset="https://readme-typing-svg.demolab.com?font=Noto+Sans+SC&weight=500&size=19&duration=2600&pause=800&center=true&vCenter=true&width=900&height=46&color=C2185B&lines=%E5%9C%A8%E6%8A%98%E8%85%BE%E6%9C%AC%E5%9C%B0%E6%A8%A1%E5%9E%8B%E5%92%8C%20AI%20%E5%BA%94%E7%94%A8%3B%E6%8A%8A%E8%83%BD%E8%B7%91%E7%9A%84%20Demo%20%E6%85%A2%E6%85%A2%E6%94%B9%E6%88%90%E7%9C%9F%E7%9A%84%E7%B3%BB%E7%BB%9F%3B%E7%BB%8F%E5%B8%B8%E5%92%8C%20Nginx%E3%80%81Windows%E3%80%81CUDA%20%E6%89%93%E4%BA%A4%E9%81%93%3B%E6%9C%80%E8%BF%91%E5%9C%A8%E7%9C%8B%E7%94%B5%E8%B7%AF%E8%AF%86%E5%88%AB%E5%92%8C%E5%A4%9A%E6%A8%A1%E5%9E%8B%E8%B7%AF%E7%94%B1" />
+  <img src="https://readme-typing-svg.demolab.com?font=Noto+Sans+SC&weight=500&size=19&duration=2600&pause=800&center=true&vCenter=true&width=900&height=46&color=C2185B&lines=%E5%9C%A8%E6%8A%98%E8%85%BE%E6%9C%AC%E5%9C%B0%E6%A8%A1%E5%9E%8B%E5%92%8C%20AI%20%E5%BA%94%E7%94%A8%3B%E6%8A%8A%E8%83%BD%E8%B7%91%E7%9A%84%20Demo%20%E6%85%A2%E6%85%A2%E6%94%B9%E6%88%90%E7%9C%9F%E7%9A%84%E7%B3%BB%E7%BB%9F%3B%E7%BB%8F%E5%B8%B8%E5%92%8C%20Nginx%E3%80%81Windows%E3%80%81CUDA%20%E6%89%93%E4%BA%A4%E9%81%93%3B%E6%9C%80%E8%BF%91%E5%9C%A8%E7%9C%8B%E7%94%B5%E8%B7%AF%E8%AF%86%E5%88%AB%E5%92%8C%E5%A4%9A%E6%A8%A1%E5%9E%8B%E8%B7%AF%E7%94%B1"
+       alt="在折腾本地模型和 AI 应用；把能跑的 Demo 慢慢改成真的系统；经常和 Nginx、Windows、CUDA 打交道；最近在看电路识别和多模型路由。" />
 </picture>
 
 </div>
@@ -58,23 +42,14 @@
 </picture>
 </p>
 
-<!-- ============================== ABOUT ============================== -->
-## // ABOUT
+<!-- ============================ 关于我 ============================ -->
+## // 关于我
 
-I build AI systems end to end — the model interface, the failure handling around it, and the product on top.
+主要在做 AI 应用。云端 API 和本地 GGUF 模型走同一套接口，路由、回退、流式输出、额度控制这些都得自己写。
+比起把模型调通，我更在意它跑起来之后稳不稳。
 
-Concretely: one streaming provider interface over cloud APIs and local GGUF nodes, with a circuit breaker,
-bounded capacity queues, daily quota ledgers, token and cost budgets, and an ordered fallback chain behind it.
-Streaming is treated as a protocol, not a pipe — metadata deltas are parsed out of the token stream so they
-never leak into visible text, stored history or summaries.
-
-Then the parts people actually touch: FastAPI services, Postgres, a hand-maintained reverse proxy, and
-frontends written by hand. Separate from that, a computer-vision system that turns a photo of a classroom
-circuit into a validated `nodes + edges` graph — where a deterministic rule engine, not an LLM, owns the answer.
-
-不做"接了一个大模型"的 Demo，而是把模型、规则、结构化输出和界面做成能跑、能查、能上线的系统。
-
-Windows-first tooling, Linux-portable services. Two systems, ~840 commits over eight months, solo.
+另外有一套电路识别的项目，从拍照到还原拓扑，规则引擎和 LLM 各管一段。
+平时 Windows 上用得多，但部署尽量保持 Linux 也能跑。
 
 <p align="center">
 <picture>
@@ -84,15 +59,13 @@ Windows-first tooling, Linux-portable services. Two systems, ~840 commits over e
 </picture>
 </p>
 
-<!-- ========================= CURRENTLY BUILDING ========================= -->
-## // CURRENTLY BUILDING
+<!-- ========================== 最近在折腾 ========================== -->
+## // 最近在折腾
 
-| Track | What is actually in it |
-| :-- | :-- |
-| **Multi-provider LLM serving** | Per-request provider resolution from a DB registry, ordered fallback with per-attempt state rebuild, circuit breaking, quota reservation/settlement, token+cost budgets |
-| **Local inference nodes** | Self-hosted GGUF runtime behind the same provider interface, with layered transport attestation (listener → SSH session → data plane → runtime → models → auth → gateway) |
-| **Structured-output vision** | YOLO detection plus a deterministic topology solver that abstains instead of guessing, with an optional LLM layer bound to the same JSON contract |
-| **Windows-first tooling** | PyInstaller packaging, PowerShell diagnostics and rollback scripts, service/environment consoles, offline-capable delivery |
+- **多模型服务** — 后台能改 provider 配置，下一次请求就生效；本地节点不通就自动切云端。
+- **本地推理** — llama.cpp、GGUF、显存和内存占用，研究怎么在家里这台机器上跑得舒服一点。
+- **电路识别** — 把课堂电路照片变成能编辑、能校验的拓扑图。认出元件不难，难的是把导线关系弄对。
+- **Windows 工具链** — 打包、诊断、回滚脚本，用得最多的还是 PowerShell。
 
 <p align="center">
 <picture>
@@ -102,95 +75,48 @@ Windows-first tooling, Linux-portable services. Two systems, ~840 commits over e
 </picture>
 </p>
 
-<!-- =========================== SELECTED WORK =========================== -->
-## // SELECTED WORK
+<!-- ============================= 项目 ============================= -->
+## // 项目
 
-Both systems below are private repositories. The cards describe architecture and engineering practice only —
-no source, endpoints, credentials or user data. Codenames are public-safe aliases.
+两个都是私有仓库，源码不方便公开，这里只写做法。
 
 <p align="center">
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="./assets/projects/tessera-dark.webp" />
   <source media="(prefers-color-scheme: light)" srcset="./assets/projects/tessera-light.webp" />
   <img src="./assets/projects/tessera-light.webp" width="100%"
-       alt="TESSERA card: multi-service AI platform. Request path from clients through a gateway and provider registry to local and cloud backends, with a circuit breaker and ordered fallback chain." />
+       alt="TESSERA 卡片：一次请求的路径，从客户端经网关、注册表到本地节点和云端，后面跟着熔断器和回退链。" />
 </picture>
 </p>
 
-#### 01 · TESSERA — multi-service AI platform `private`
+#### TESSERA · 多服务 AI 平台 `私有`
 
-A multi-site web platform whose core is a home-grown LLM serving layer: three FastAPI services behind one
-reverse proxy, an admin-managed provider registry, and a frontend written without a framework.
+三个 FastAPI 服务放在一个反向代理后面，核心是自己写的一套 LLM 服务层。
+后台改完 provider 配置，下一次请求就生效，不用重启。
 
-**Engineering notes**
-
-- **Provider layer** — one async streaming interface over OpenAI-compatible cloud endpoints and a local GGUF
-  runtime, normalising request, event and usage shapes. A shared client pool is keyed per endpoint/model/key;
-  streaming uses two deadlines, a first-token deadline and a stream-idle timeout, so a node that accepts a
-  connection and then stalls is treated differently from one that never answers.
-- **Resilience with deliberate semantics** — the circuit breaker does *not* open on `BUSY` or `MODEL_LOADING`,
-  because a saturated node is not a broken node. Capacity domains are bounded and emit a `queued` status to the
-  client instead of failing. Daily quota uses reserve → settle → release so a crashed request cannot silently
-  consume budget, and startup recovery rewrites orphaned in-flight generations and returns their reservations.
-- **Streaming protocol** — an incremental parser separates hidden metadata from visible text mid-stream, with the
-  parser rebuilt per provider attempt so a failed attempt cannot poison a fallback. Reasoning output is displayed
-  but never persisted or replayed.
-- **Persona pipeline** — canon is compiled into provider-scoped prefixes with prompt-cache-friendly stable
-  prefixes first, versioned through publish / activate / approve, and gated by a blind evaluation harness whose
-  release check scans for contiguous verbatim leakage from the source material.
-- **Ops surface** — background retention purges, typed DB-backed runtime settings that apply without a restart,
-  hand-rolled idempotent column migrations with a forward-incompatibility guard, and health probes with TTL-based
-  freshness rather than per-request pings.
-
-`Python` · `FastAPI` · `SQLAlchemy 2` · `Pydantic` · `asyncio` · `httpx` · `Postgres` · `Nginx` · `vanilla JS`
-
-**Scale** — a production-scale Python AI platform with 60+ modules, 170+ API
-endpoints, and extensive test coverage; 678 commits since January 2026.
+- 云端和本地模型走同一套流式接口，一边不通就换另一边
+- 熔断器把「忙」和「坏」分开看，节点排队时不会直接判死
+- 流式返回里混着的元数据会在输出过程中剥掉，不污染正文和历史
+- 角色设定走编译 → 发布 → 泄漏检查，发布前会拦一道
 
 <p align="center">
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="./assets/projects/aurora-dark.webp" />
   <source media="(prefers-color-scheme: light)" srcset="./assets/projects/aurora-light.webp" />
   <img src="./assets/projects/aurora-light.webp" width="100%"
-       alt="AURORA card: circuit vision and topology engine. A photo goes to a YOLO detector, then either a deterministic rule engine or an LLM layer, both emitting one nodes-and-edges JSON contract that drives a canvas, an export and a decision trace." />
+       alt="AURORA 卡片：照片经检测器后分别走规则引擎和 LLM 层，两边输出同一份 nodes 与 edges 契约，再驱动画布、导出和决策路径解释。" />
 </picture>
 </p>
 
-#### 02 · AURORA — circuit vision & topology engine `private`
+#### AURORA · 电路识别与拓扑还原 `私有`
 
-One codebase that turns a photo of a middle-school physics circuit into a validated circuit graph. YOLO detects
-components; a hand-written rule engine infers topology; an LLM is an optional semantic layer behind the same
-JSON contract that feeds a desktop editor, a training toolbox, a web app and a packaged Windows build.
+一开始只是想把课堂电路图识别出来。做下去才发现，认出元件不难，
+难的是把导线关系还原成一张靠谱的拓扑图。
 
-**Engineering notes**
-
-- **The rule engine refuses to guess.** If any wire evidence exists, only wire-derived edges are emitted and
-  templates are never consulted. A node with real geometry but no supporting evidence yields zero edges and an
-  `unknown` circuit type rather than a plausible-looking invention. Every ambiguity test abstains: an ownership
-  cost gap below a fixed margin returns nothing, and an orientation search that exceeds its combination budget
-  gives up with the comment that an orientation must never be chosen merely because it survived a cutoff.
-- **Algorithms chosen on purpose.** Wire segments are merged by union-find over a geometric join predicate that
-  rejects merges crossing a component via continuous box intersection, and refuses to merge parallel wires as
-  they lengthen. The series fallback builds a Prim minimum spanning tree closed into a cycle by preorder DFS —
-  deliberately replacing greedy nearest-neighbour, because an MST is a 2-approximation of metric TSP and does not
-  produce cross-graph flying wires. A disjoint-set validator runs on every exit path and *diagnoses* unsafe
-  topology rather than silently repairing it.
-- **Provenance and explainability ship with the result.** Every edge records why it exists — template match,
-  wire bridge, ratio heuristic, MST fallback, dangling repair — and each stage appends a decision record, so a
-  wrong answer is traceable to the branch that produced it.
-- **Browser-side inference.** ONNX Runtime Web runs detection fully client-side in a web worker, preferring
-  WebGPU and falling back to threaded SIMD WASM, with provider timeouts and upload pixel budgets scaled by a
-  device tier. Cross-origin isolation headers are served on every response so multi-threaded WASM actually
-  engages; the runtime is vendored locally for offline use.
-- **Testing as a contract.** Regression cases are hand-authored at the edge level and compared as multisets that
-  preserve port sides and duplicate edges, with a canonical form that treats swapping two identical resistors as
-  the same topology. Seven markers are `xfail(strict=True)`, so known drift fails the suite if it silently
-  disappears.
-
-`Python` · `Ultralytics YOLO` · `PyTorch` · `ONNX Runtime` · `TensorRT` · `OpenCV` · `CustomTkinter` · `FastAPI` · `ONNX Runtime Web`
-
-**Scale** — rule engine 2,415 lines and 71 methods in a single class; comprehensive test coverage backed by 240+ assertion-based tests, 7 of them `xfail(strict=True)` drift markers;
-13 classroom-experiment presets; six delivery surfaces from one contract; 161 commits since April 2026.
+- 证据不够就不猜。宁可返回「未知」，也不编一条看起来合理的边
+- 导线用并查集聚类，环路用 Prim MST 收，避免连线在图上乱飞
+- 每条边都记着自己是怎么来的，答错了能查到是哪一步
+- 浏览器里直接跑 YOLO，WebGPU 不行就退到 WASM
 
 <p align="center">
 <picture>
@@ -200,20 +126,32 @@ JSON contract that feeds a desktop editor, a training toolbox, a web app and a p
 </picture>
 </p>
 
-<!-- ======================== ENGINEERING FOCUS ======================== -->
-## // ENGINEERING FOCUS
+<!-- =========================== 常用技术 =========================== -->
+## // 常用技术
 
-Not a language list — the areas where the work actually happens.
+<p align="center">
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://skillicons.dev/icons?i=py,ts,js,fastapi,postgres,sqlite,nginx&theme=dark&perline=7" />
+  <source media="(prefers-color-scheme: light)" srcset="https://skillicons.dev/icons?i=py,ts,js,fastapi,postgres,sqlite,nginx&theme=light&perline=7" />
+  <img src="https://skillicons.dev/icons?i=py,ts,js,fastapi,postgres,sqlite,nginx&theme=light&perline=7"
+       alt="Python、TypeScript、JavaScript、FastAPI、PostgreSQL、SQLite、Nginx" />
+</picture>
 
-| Area | What it means here |
-| :-- | :-- |
-| **AI / LLM systems** | Provider abstraction over OpenAI-compatible SSE, local GGUF via llama.cpp, streaming parsers, structured-output contracts with tolerant extraction and reparative validation, prompt/context budgeting, persona compilation, offline evaluation harnesses |
-| **Backend** | FastAPI, SQLAlchemy 2, Pydantic, asyncio concurrency with per-conversation locks, JWT auth with token-version revocation, idempotent hand-rolled migrations, admission control, background task lifecycle |
-| **Frontend** | Vanilla JS at scale with no framework or bundler, Vue 3 + TypeScript + Pinia + Vite, canvas editors with world/view transforms, SSE clients, responsive layout without a UI kit |
-| **Vision / ML** | Ultralytics YOLO across PyTorch, ONNX Runtime and TensorRT backends, hardware-tiered inference configuration, self-healing fallback when a backend or input size mismatches, model export and precision conversion |
-| **Algorithms** | Union-find clustering, Prim MST, A\* orthogonal routing, disjoint-set validation, PCA axis analysis, geometric intersection tests, custom relevance ranking with CJK bigram expansion |
-| **Infrastructure** | Nginx with TLS, multi-site reverse proxying, rate-limit zones and buffering disabled for SSE; Windows service tooling; PowerShell diagnostics, deployment export and rollback |
-| **Quality** | pytest across two suites, Playwright browser E2E, ruff, coverage gates, pre-commit hooks that run per-subsystem test gates, a multi-job CI workflow with a deployment-version gate |
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://skillicons.dev/icons?i=pytorch,opencv,vue,vite,linux,windows,powershell&theme=dark&perline=7" />
+  <source media="(prefers-color-scheme: light)" srcset="https://skillicons.dev/icons?i=pytorch,opencv,vue,vite,linux,windows,powershell&theme=light&perline=7" />
+  <img src="https://skillicons.dev/icons?i=pytorch,opencv,vue,vite,linux,windows,powershell&theme=light&perline=7"
+       alt="PyTorch、OpenCV、Vue、Vite、Linux、Windows、PowerShell" />
+</picture>
+</p>
+
+- **AI / LLM** — `Python` · `FastAPI` · `llama.cpp` · `GGUF` · SSE 流式
+- **前端** — `JavaScript` · `TypeScript` · `Vue` · Canvas
+- **视觉 / 模型** — `YOLO` · `PyTorch` · `ONNX Runtime` · `OpenCV`
+- **数据 / 基建** — `PostgreSQL` · `SQLite` · `Nginx` · `PowerShell` · `Linux`
+
+写顺手的是 Python 和原生 JS，Vue 和 TypeScript 用在在线课程那套上。
+部署基本是 Nginx 加 Windows 服务，能搬去 Linux 的尽量搬。
 
 <p align="center">
 <picture>
@@ -223,43 +161,19 @@ Not a language list — the areas where the work actually happens.
 </picture>
 </p>
 
-<!-- ============================== STACK ============================== -->
-## // STACK
-
-Only what I have actually shipped with.
-
-| Layer | In use |
-| :-- | :-- |
-| **Languages** | `Python` · `TypeScript` · `JavaScript` · `PowerShell` · `Bash` · `SQL` |
-| **Backend** | `FastAPI` · `SQLAlchemy 2` · `Pydantic` · `asyncio` · `httpx` · `uvicorn` · `python-jose` |
-| **Data** | `PostgreSQL` · `SQLite` · `JSON Schema` contracts |
-| **AI / LLM** | OpenAI-compatible APIs · `llama.cpp` / GGUF · SSE streaming · tool calling · prompt & context budgeting |
-| **Vision / ML** | `Ultralytics YOLO` · `PyTorch` · `ONNX Runtime` · `TensorRT` · `OpenCV` · OpenVINO & TFLite (export) |
-| **Frontend** | `Vue 3` · `Pinia` · `Vite` · `ONNX Runtime Web` · canvas 2D · hand-written CSS |
-| **Infra** | `Nginx` · TLS · reverse proxy · rate limiting · Windows services · `PyInstaller` |
-| **Quality** | `pytest` · `Playwright` · `ruff` · `coverage.py` · `pre-commit` · `GitHub Actions` |
-
-<p align="center">
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="./assets/ornaments/divider-dark.webp" />
-  <source media="(prefers-color-scheme: light)" srcset="./assets/ornaments/divider-light.webp" />
-  <img src="./assets/ornaments/divider-light.webp" width="100%" alt="" />
-</picture>
-</p>
-
-<!-- ============================= ACTIVITY ============================= -->
-## // ACTIVITY
+<!-- ========================= Contributions ========================= -->
+## // Contributions
 
 <p align="center">
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="./assets/generated/snake-dark.svg" />
   <source media="(prefers-color-scheme: light)" srcset="./assets/generated/snake-light.svg" />
   <img src="./assets/generated/snake-light.svg" width="100%"
-       alt="Contribution graph for the last year, animated as a snake that eats the squares." />
+       alt="最近一年的贡献格子，一条小蛇沿着格子爬过去并吃掉方块。" />
 </picture>
 </p>
 
-<sub>Rebuilt once a day by GitHub Actions — see [`.github/workflows/snake.yml`](.github/workflows/snake.yml).</sub>
+<sub>每天由 GitHub Actions 重新生成，见 [`.github/workflows/snake.yml`](.github/workflows/snake.yml)。</sub>
 
 <p align="center">
 <picture>
@@ -269,16 +183,16 @@ Only what I have actually shipped with.
 </picture>
 </p>
 
-<!-- ============================= CONNECT ============================= -->
-## // CONNECT
+<!-- ============================ 找到我 ============================ -->
+## // 找到我
 
 <div align="center">
 
 <img src="./assets/misc/strand-portrait.webp" width="170"
-     alt="Portrait of the artist's original character, clipped into a crimson diamond." />
+     alt="自设角色的半身像，裁成菱形并镶了一道暗红描边。" />
 
-Most of this work lives in private repositories. If you want to talk about multi-provider LLM serving,
-local inference infrastructure, or deterministic vision-and-rules pipelines — open an issue or reach me on GitHub.
+两个项目都是私有仓库，源码不方便公开。想聊多模型服务、本地推理，
+或者视觉加规则这类东西，在 GitHub 上找我就行。
 
 [![GitHub](https://img.shields.io/badge/GitHub-MostimaBridges-E11D5C?style=flat-square&labelColor=1A1027&logo=github&logoColor=white)](https://github.com/MostimaBridges)
 
@@ -286,9 +200,4 @@ local inference infrastructure, or deterministic vision-and-rules pipelines — 
 
 </div>
 
-<!-- ============================== FOOTER ============================== -->
-<sub>
-Art, project cards, dividers and the monogram are generated from
-<a href="./scripts/build_assets.py">scripts/build_assets.py</a>, so the whole palette stays in one place.
-The contribution snake is regenerated daily by GitHub Actions.
-</sub>
+<sub>标题图、项目卡、分隔线和 monogram 都由 <a href="./scripts/build_assets.py">scripts/build_assets.py</a> 生成，配色只维护那一处。</sub>
