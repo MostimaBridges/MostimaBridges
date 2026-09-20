@@ -127,17 +127,19 @@
 
 <p align="center">
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://skillicons.dev/icons?i=py,ts,js,fastapi,postgres,sqlite,nginx&theme=dark&perline=7" />
-  <source media="(prefers-color-scheme: light)" srcset="https://skillicons.dev/icons?i=py,ts,js,fastapi,postgres,sqlite,nginx&theme=light&perline=7" />
-  <img src="https://skillicons.dev/icons?i=py,ts,js,fastapi,postgres,sqlite,nginx&theme=light&perline=7"
-       alt="Python、TypeScript、JavaScript、FastAPI、PostgreSQL、SQLite、Nginx" />
+  <source media="(prefers-color-scheme: dark)" srcset="https://skillicons.dev/icons?i=py,ts,js,fastapi,postgres,sqlite,nginx,git&theme=dark&perline=8" />
+  <source media="(prefers-color-scheme: light)" srcset="https://skillicons.dev/icons?i=py,ts,js,fastapi,postgres,sqlite,nginx,git&theme=light&perline=8" />
+  <img src="https://skillicons.dev/icons?i=py,ts,js,fastapi,postgres,sqlite,nginx,git&theme=light&perline=8"
+       alt="Python、TypeScript、JavaScript、FastAPI、PostgreSQL、SQLite、Nginx、Git" />
 </picture>
+</p>
 
+<p align="center">
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://skillicons.dev/icons?i=pytorch,opencv,vue,vite,linux,windows,powershell&theme=dark&perline=7" />
-  <source media="(prefers-color-scheme: light)" srcset="https://skillicons.dev/icons?i=pytorch,opencv,vue,vite,linux,windows,powershell&theme=light&perline=7" />
-  <img src="https://skillicons.dev/icons?i=pytorch,opencv,vue,vite,linux,windows,powershell&theme=light&perline=7"
-       alt="PyTorch、OpenCV、Vue、Vite、Linux、Windows、PowerShell" />
+  <source media="(prefers-color-scheme: dark)" srcset="https://skillicons.dev/icons?i=pytorch,opencv,vue,vite,linux,windows,powershell,github&theme=dark&perline=8" />
+  <source media="(prefers-color-scheme: light)" srcset="https://skillicons.dev/icons?i=pytorch,opencv,vue,vite,linux,windows,powershell,github&theme=light&perline=8" />
+  <img src="https://skillicons.dev/icons?i=pytorch,opencv,vue,vite,linux,windows,powershell,github&theme=light&perline=8"
+       alt="PyTorch、OpenCV、Vue、Vite、Linux、Windows、PowerShell、GitHub" />
 </picture>
 </p>
 
