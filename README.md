@@ -3,6 +3,8 @@
   ========
   * 图片全部放在 assets/ 下自己托管。只有 typing 副标题和 Skill Icons 走第三方，
     它们挂掉不影响阅读。
+  * 中英切换：顶部与底部那两枚胶囊是 README.md 与 README.en.md 之间唯一的入口，
+    两边链接必须成对存在，check_readme.py 会检查互链。
   * dark / light 用 <picture> 切换，兜底的 <img> 一律指向 light 版本，
     这样不认 media query 的客户端也不会在浅色页面上出现一块黑图。
   * srcset 里绝对不能出现裸逗号。HTML 用逗号分隔 srcset 的候选图，GitHub 会照做，
@@ -11,6 +13,13 @@
   * <div align="center"> 里的 markdown 会被正常解析，那些空行别删。
   * 改完跑 python scripts/check_readme.py，这条也在 CI 里跑。
 -->
+
+<!-- ======================= 语言切换 / LANGUAGE SWITCH ======================= -->
+<p align="center">
+  <a href="./README.md"><img src="./assets/icons/lang-zh-active.svg" height="30" alt="中文（当前语言）" /></a>
+  &nbsp;
+  <a href="./README.en.md"><img src="./assets/icons/lang-en-idle.svg" height="30" alt="Switch to English" /></a>
+</p>
 
 <!-- ============================== HERO ============================== -->
 <div align="center">
@@ -207,8 +216,14 @@ Python 和原生 JS 是主力，Vue / TypeScript 用在在线课程那套上。<
 
 上面两个项目都是私有仓库，源码不方便公开，这里只写了做法。
 
-标题图、项目卡、分隔线和 monogram 都由 <a href="./scripts/build_assets.py">scripts/build_assets.py</a> 生成，配色只维护那一处。
+标题图、项目卡、分隔线、monogram 和语言切换按钮都由 <a href="./scripts/build_assets.py">scripts/build_assets.py</a> 生成，配色只维护那一处。
 
 <img src="./assets/icons/monogram.svg" width="34" alt="" />
+
+<p align="center">
+  <a href="./README.md"><img src="./assets/icons/lang-zh-active.svg" height="30" alt="中文（当前语言）" /></a>
+  &nbsp;
+  <a href="./README.en.md"><img src="./assets/icons/lang-en-idle.svg" height="30" alt="Switch to English" /></a>
+</p>
 
 </div>

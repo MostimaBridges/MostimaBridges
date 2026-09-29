@@ -1,13 +1,14 @@
 #!/usr/bin/env python3
-"""Validate README.md, its local assets, and the workflow files.
+"""Validate every README, its local assets, and the workflow files.
 
 Run locally or from CI (`.github/workflows/readme-check.yml`). Exits non-zero on
 any error; warnings do not fail the build.
 
 Checks
 ------
-README.md
+README.md and README.en.md
   * every relative ``src`` / ``srcset`` / ``href`` target exists on disk
+  * the pages link to each other, so the language switch is never one-sided
   * no absolute local paths (``C:\\``, ``D:\\``, ``E:\\``, ``file://``)
   * no bare comma in a ``srcset`` (HTML would read it as a candidate separator
     and silently truncate the URL)
@@ -38,7 +39,9 @@ import sys
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parent.parent
-README = REPO / "README.md"
+# Every page a visitor can land on is validated, and they must link to each
+# other: the language switch pills are the only route between them.
+READMES = (REPO / "README.md", REPO / "README.en.md")
 WORKFLOWS = REPO / ".github" / "workflows"
 
 # Files produced by CI, so they are legitimately absent from a fresh checkout.
@@ -99,12 +102,13 @@ HTML_COMMENT = re.compile(r"<!--.*?-->", re.DOTALL)
 URL_SUFFIX = re.compile(r"[?#].*$")
 
 
-def check_readme() -> None:
-    if not README.exists():
-        err("README.md is missing")
+def check_readme(path: Path) -> None:
+    name = path.name
+    if not path.exists():
+        err(f"{name} is missing")
         return
 
-    raw = README.read_text(encoding="utf-8")
+    raw = path.read_text(encoding="utf-8")
     text = HTML_COMMENT.sub("", raw)
 
     # ── HTML hygiene ───────────────────────────────────────────────────────
@@ -112,10 +116,10 @@ def check_readme() -> None:
         opened = len(re.findall(rf"<{tag}(?=[\s>])", text))
         closed = len(re.findall(rf"</{tag}>", text))
         if opened != closed:
-            err(f"<{tag}> unbalanced in README.md: {opened} opened, {closed} closed")
+            err(f"<{tag}> unbalanced in {name}: {opened} opened, {closed} closed")
 
     if re.search(r"\sstyle\s*=", text):
-        err("README.md uses a style= attribute; GitHub strips these")
+        err(f"{name} uses a style= attribute; GitHub strips these")
 
     # HTML splits srcset on every comma, whitespace or not, so a comma inside a
     # URL silently truncates the value to its first candidate. skillicons.dev
@@ -172,32 +176,50 @@ def check_readme() -> None:
             if not (REPO / target).exists():
                 warn(f"{target} is CI-generated and not present yet (run the snake workflow once)")
             continue
-        path = REPO / target
-        if not path.exists():
-            err(f"README.md references a missing file: {ref}")
-        elif path.is_file() and path.stat().st_size == 0:
-            err(f"README.md references an empty file: {ref}")
+        resolved = REPO / target
+        if not resolved.exists():
+            err(f"{name} references a missing file: {ref}")
+        elif resolved.is_file() and resolved.stat().st_size == 0:
+            err(f"{name} references an empty file: {ref}")
 
     # ── no local machine paths ────────────────────────────────────────────
     # These scans deliberately run against `raw`, comments included: a secret or
     # a machine path inside an HTML comment is still committed and still public.
     for m in re.finditer(r"\b[A-Za-z]:\\[^\s\"'<>)]*", raw):
-        err(f"absolute local path in README.md: {m.group(0)}")
+        err(f"absolute local path in {name}: {m.group(0)}")
     if "file://" in raw:
-        err("README.md contains a file:// URL")
+        err(f"{name} contains a file:// URL")
 
     # ── no secrets, no private infrastructure ─────────────────────────────
     for pattern, label in SECRET_PATTERNS + LEAK_PATTERNS:
         for m in re.finditer(pattern, raw):
-            err(f"README.md contains a {label}: {m.group(0)[:60]}")
+            err(f"{name} contains a {label}: {m.group(0)[:60]}")
     for m in re.finditer(r"github\.com/[A-Za-z0-9_.-]+/([A-Za-z0-9_.-]+)", raw):
         if m.group(1) not in ("MostimaBridges",):
-            warn(f"README.md links to another repository ({m.group(0)}); confirm it is public")
+            warn(f"{name} links to another repository ({m.group(0)}); confirm it is public")
 
     if "TODO(USER)" in raw or "TODO:" in raw:
-        err("README.md still contains a TODO marker")
+        err(f"{name} still contains a TODO marker")
 
     check_tone(text)
+
+
+def check_language_switch() -> None:
+    """Every README must link to every other one, in both directions.
+
+    A one-sided switch strands the reader: the English page can send you to the
+    Chinese one, but not back.
+    """
+    present = [p for p in READMES if p.exists()]
+    if len(present) < 2:
+        return
+    for src in present:
+        text = src.read_text(encoding="utf-8")
+        for dst in present:
+            if dst == src:
+                continue
+            if dst.name not in text:
+                err(f"{src.name} never links to {dst.name}; the language switch must be symmetric")
 
 
 # Marketing register and LLM-summary sentence shapes. These are warnings, not
@@ -338,7 +360,9 @@ def check_workflows() -> None:
 
 def main() -> int:
     print(f"checking {REPO}")
-    check_readme()
+    for readme in READMES:
+        check_readme(readme)
+    check_language_switch()
     check_assets()
     check_workflows()
 

@@ -23,6 +23,11 @@ third-party image service):
     assets/ornaments/divider-{dark,light}.webp
     assets/misc/strand-portrait.webp
     assets/icons/monogram.svg
+    assets/icons/ai-tools-{dark,light}.svg
+    assets/icons/lang-{zh,en}-{active,idle}.svg
+
+Only the bitmap targets read the source artwork, so ``--source-root`` is
+required for ``all`` / ``hero`` / ``cards`` / ``portrait`` and for nothing else.
 
 Requires: Pillow >= 10 with WebP and FreeType support.
 """
@@ -819,6 +824,35 @@ MONOGRAM_SVG = """<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" wi
 
 
 # ─────────────────────────────────────────────────────────────────────────────
+# LANGUAGE SWITCH (SVG pills, one per language per state)
+#   Deliberately theme-neutral: the current language is a filled crimson pill,
+#   the other is a muted outline. A single pair therefore reads correctly on
+#   both GitHub light and dark, so the buttons do not need a <picture> each.
+# ─────────────────────────────────────────────────────────────────────────────
+
+LANG_BTN_W, LANG_BTN_H = 132, 40
+LANG_BTN_FONT = "Noto Sans SC, Segoe UI, system-ui, -apple-system, sans-serif"
+
+
+def build_lang_button(label: str, active: bool, aria: str) -> str:
+    """One pill. ``active`` marks the language the reader is already on."""
+    if active:
+        fill, stroke, ink, weight = "#E11D5C", "#E11D5C", "#FFFFFF", 600
+    else:
+        fill, stroke, ink, weight = "none", "#7C7C88", "#7C7C88", 500
+    return (
+        f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {LANG_BTN_W} {LANG_BTN_H}" '
+        f'width="{LANG_BTN_W}" height="{LANG_BTN_H}" role="img" aria-label="{aria}">'
+        f'<rect x="1" y="1" width="{LANG_BTN_W - 2}" height="{LANG_BTN_H - 2}" rx="9" '
+        f'fill="{fill}" stroke="{stroke}" stroke-width="2"/>'
+        f'<text x="{LANG_BTN_W // 2}" y="26" text-anchor="middle" '
+        f'font-family="{LANG_BTN_FONT}" font-size="17" font-weight="{weight}" '
+        f'fill="{ink}">{label}</text>'
+        f'</svg>\n'
+    )
+
+
+# ─────────────────────────────────────────────────────────────────────────────
 # DRIVER
 # ─────────────────────────────────────────────────────────────────────────────
 
@@ -836,16 +870,20 @@ def save(img: Image.Image, path: Path, lossless: bool = False, budget_kb: float 
 def main() -> int:
     ap = argparse.ArgumentParser(description="Build MostimaBridges profile assets.")
     ap.add_argument("--source-root", type=Path, default=DEFAULT_SOURCE_ROOT,
-                    help="read-only directory holding the source artwork (required)")
+                    help="read-only directory holding the source artwork "
+                         "(needed by --only all/hero/cards/portrait)")
     ap.add_argument("--only", default="all",
-                    choices=["all", "hero", "cards", "divider", "portrait", "icons", "monogram"])
+                    choices=["all", "hero", "cards", "divider", "portrait", "icons", "monogram", "lang"])
     args = ap.parse_args()
 
+    # divider / icons / monogram / lang are pure palette or vector work, so they
+    # must stay runnable without the artwork; only the bitmap targets need it.
     root = args.source_root
-    if root is None:
+    if root is None and args.only in ("all", "hero", "cards", "portrait"):
         ap.print_usage()
-        print("ERROR: --source-root is required.  Point it at the read-only directory\n"
-              "       holding the hero artwork and the OC portrait, e.g.\n"
+        print(f"ERROR: --source-root is required for --only {args.only}.\n"
+              "       Point it at the read-only directory holding the hero artwork\n"
+              "       and the OC portrait, e.g.\n"
               "       python scripts/build_assets.py --source-root /path/to/artwork",
               file=sys.stderr)
         return 1
@@ -854,7 +892,7 @@ def main() -> int:
         print(f"ERROR: source artwork not found: {root / BANNER_SOURCE}", file=sys.stderr)
         return 1
 
-    print(f"source: {root}")
+    print(f"source: {root if root is not None else '(not needed for this target)'}")
 
     if args.only in ("all", "hero"):
         print("hero:")
@@ -879,16 +917,23 @@ def main() -> int:
         else:
             print(f"  skipped (missing {PORTRAIT_SOURCE})", file=sys.stderr)
 
-    if args.only in ("all", "icons", "monogram"):
+    if args.only in ("all", "icons", "monogram", "lang"):
         print("icons:")
         for name, svg in (
             ("monogram.svg", MONOGRAM_SVG),
             ("ai-tools-dark.svg", build_ai_tools_svg("dark")),
             ("ai-tools-light.svg", build_ai_tools_svg("light")),
+            ("lang-zh-active.svg", build_lang_button("中文", True, "中文（当前语言）")),
+            ("lang-zh-idle.svg", build_lang_button("中文", False, "切换到中文版")),
+            ("lang-en-active.svg", build_lang_button("EN", True, "English (current language)")),
+            ("lang-en-idle.svg", build_lang_button("EN", False, "Switch to English")),
         ):
             out = ASSETS / "icons" / name
             out.parent.mkdir(parents=True, exist_ok=True)
-            out.write_text(svg, encoding="utf-8")
+            # .gitattributes normalises *.svg to LF, so write LF here too: on
+            # Windows the default would be CRLF and every regenerate would come
+            # back as a phantom diff.
+            out.write_text(svg, encoding="utf-8", newline="\n")
             print(f"  {out.relative_to(REPO).as_posix():<44} {out.stat().st_size} B")
 
     print("done.")
