@@ -17,9 +17,9 @@ written back to it.
 Outputs (all committed and self-hosted, so the README never depends on a
 third-party image service):
 
-    assets/hero/hero-{dark,light}.webp
-    assets/projects/tessera-{dark,light}.webp
-    assets/projects/aurora-{dark,light}.webp
+    assets/hero/hero[-en]-{dark,light}.webp     # HUD copy is zh / en
+    assets/projects/tessera[-en]-{dark,light}.webp
+    assets/projects/aurora[-en]-{dark,light}.webp
     assets/ornaments/divider-{dark,light}.webp
     assets/misc/strand-portrait.webp
     assets/icons/monogram.svg
@@ -301,6 +301,121 @@ def fit_font(draw, text: str, factory, max_width: float, start: int, tracking: f
 # screen without going soft.
 # ─────────────────────────────────────────────────────────────────────────────
 
+# ── 图内文案：中英各一套（Hero 与项目卡共用一张表） ──
+HERO_COPY = {
+    "zh": {
+        "focus": (("方向", "AI · LLM 系统"),
+                  ("推理", "本地 + 云端"),
+                  ("交付", "全栈服务")),
+        "status_label": "状态",
+        "status_value": "持续更新",
+    },
+    "en": {
+        "focus": (("CORE", "AI · LLM SYSTEMS"),
+                  ("EDGE", "LOCAL + CLOUD"),
+                  ("SHIP", "FULL-STACK")),
+        "status_label": "STATUS",
+        "status_value": "BUILDING",
+    },
+}
+
+CARD_COPY = {
+    "zh": {
+        "section": "// 项目",
+        "chip": "私有仓库",
+        "tessera": {
+            "subtitle": "多服务 AI 平台",
+            "caption": "一次请求的路径",
+            "tech": "asyncio · httpx · FastAPI · SQLAlchemy · Postgres",
+            "bullets": [
+                "云端和本地 GGUF 走同一套 provider 接口",
+                "熔断、排队、每日额度，按账本管",
+                "流式输出里夹带的元数据，边收边剥离",
+                "角色设定：编译 → 发布 → 泄漏检查",
+                "运维面：迁移、保留期清理、运行时设置",
+            ],
+            "boxes": [
+                (0, 1, 348, "客户端", "网页对话 · 个人 API", False),
+                (388, 1, 404, "网关", "准入 · 配额 · 预算", True),
+                (388, 2, 404, "注册表", "按请求取 provider 快照", False),
+                (40, 3, 330, "本地节点", "llama.cpp · GGUF", False),
+                (410, 3, 330, "云端", "OpenAI 兼容", False),
+                (40, 4, 330, "熔断器", "忙不算故障", False),
+                (410, 4, 330, "回退链", "有序 · 带遥测", False),
+            ],
+        },
+        "aurora": {
+            "subtitle": "电路识别与拓扑还原",
+            "caption": "照片 → 结构化电路",
+            "tech": "ultralytics · torch · onnxruntime · tensorrt · ort-web",
+            "bullets": [
+                "规则引擎说不准就不猜，宁可少连一根",
+                "导线用并查集聚类，环路用 Prim MST 收尾",
+                "每条边都记着为什么存在，错了能回溯",
+                "串并联看主轴方向，另外带一道短路校验",
+                "浏览器里跑 YOLO，WebGPU 不行就退 WASM",
+            ],
+            "boxes": [
+                (0, 1, 268, "照片", "课堂实验", False),
+                (308, 1, 442, "检测器", "PT / ONNX / TensorRT", True),
+                (40, 2, 330, "规则引擎", "确定性 · 可解释", False),
+                (410, 2, 330, "LLM 层", "云端 + 本地 GGUF", False),
+                (160, 3, 428, "nodes + edges", "同一份 JSON 契约", True),
+                (40, 4, 236, "画布", "可编辑", False),
+                (292, 4, 236, "导出", "PNG · JSON", False),
+                (544, 4, 236, "解释", "决策路径", False),
+            ],
+        },
+    },
+    "en": {
+        "section": "// WORK",
+        "chip": "PRIVATE",
+        "tessera": {
+            "subtitle": "Multi-service AI platform",
+            "caption": "REQUEST PATH",
+            "tech": "asyncio · httpx · FastAPI · SQLAlchemy · Postgres",
+            "bullets": [
+                "One provider interface: cloud APIs + local GGUF",
+                "Breaker, capacity queues, quota ledger",
+                "Metadata stripped from the token stream",
+                "Personas: compile, publish, leak-gate",
+                "Ops: migrations, retention, live settings",
+            ],
+            "boxes": [
+                (0, 1, 348, "CLIENTS", "webchat · personal API", False),
+                (388, 1, 404, "GATEWAY", "admission · quota · budget", True),
+                (388, 2, 404, "REGISTRY", "per-request snapshot", False),
+                (40, 3, 330, "LOCAL NODE", "llama.cpp · GGUF", False),
+                (410, 3, 330, "CLOUD", "OpenAI-compatible", False),
+                (40, 4, 330, "BREAKER", "busy != broken", False),
+                (410, 4, 330, "FALLBACK", "ordered · telemetry", False),
+            ],
+        },
+        "aurora": {
+            "subtitle": "Circuit vision & topology recovery",
+            "caption": "PHOTO → STRUCTURED CIRCUIT",
+            "tech": "ultralytics · torch · onnxruntime · tensorrt · ort-web",
+            "bullets": [
+                "Rules abstain when evidence is thin",
+                "Union-find clusters, Prim MST loops",
+                "Every edge keeps its provenance",
+                "PCA axis gate, DSU safety check",
+                "YOLO in-browser: WebGPU, then WASM",
+            ],
+            "boxes": [
+                (0, 1, 268, "PHOTO", "classroom photo", False),
+                (308, 1, 442, "DETECTOR", "PT / ONNX / TensorRT", True),
+                (40, 2, 330, "RULE ENGINE", "deterministic", False),
+                (410, 2, 330, "LLM LAYER", "cloud + local GGUF", False),
+                (160, 3, 428, "NODES + EDGES", "one JSON contract", True),
+                (40, 4, 236, "CANVAS", "editable", False),
+                (292, 4, 236, "EXPORT", "PNG · JSON", False),
+                (544, 4, 236, "EXPLAIN", "decision path", False),
+            ],
+        },
+    },
+}
+
 HERO_W, HERO_H = 1692, 656
 PANEL_W = 620
 ART_W = HERO_W - PANEL_W
@@ -323,7 +438,8 @@ def build_art(pal: dict, source_root: Path) -> Image.Image:
     return art
 
 
-def build_hero(pal: dict, source_root: Path) -> Image.Image:
+def build_hero(pal: dict, source_root: Path, lang: str = "zh") -> Image.Image:
+    cp = HERO_COPY[lang]
     canvas = Image.new("RGBA", (HERO_W, HERO_H), rgb(pal["panel"]) + (255,))
     canvas.paste(build_art(pal, source_root), (PANEL_W, 0))
     canvas.alpha_composite(scanlines((ART_W, HERO_H), alpha=pal["scan_alpha"]), (PANEL_W, 0))
@@ -377,19 +493,20 @@ def build_hero(pal: dict, source_root: Path) -> Image.Image:
 
     # ── focus readout: the who / what / which-direction payload ────────────
     y = 440
-    for label, value in (("方向", "AI · LLM 系统"),
-                         ("推理", "本地 + 云端"),
-                         ("交付", "全栈服务")):
+    for label, value in cp["focus"]:
         draw_tracked(canvas, (PAD, y + 5), label, sans(24, "Bold"), rgb(pal["crimson"]), tracking=3.0)
-        draw_tracked(canvas, (PAD + 96, y - 4), value, sans(31), rgb(pal["text"]), tracking=1.0)
+        draw_tracked(canvas, (PAD + 112, y - 4), value, sans(31), rgb(pal["text"]), tracking=1.0)
         y += 50
 
     # ── bottom strip ───────────────────────────────────────────────────────
     by = HERO_H - 70
     hairline(d, PAD, by, PANEL_W - PAD, by, pal["line"], 200, 2)
-    draw_tracked(canvas, (PAD, by + 23), "状态", sans(22, "Bold"), rgb(pal["muted"]), tracking=3.0)
-    d.ellipse([PAD + 66, by + 31, PAD + 80, by + 45], fill=rgba(pal["ember"], 255))
-    draw_tracked(canvas, (PAD + 94, by + 23), "持续更新", sans(22, "Bold"), rgb(pal["ember"]), tracking=3.0)
+    f_status = sans(22, "Bold")
+    label_w = measure(d, cp["status_label"], f_status, 3.0)
+    draw_tracked(canvas, (PAD, by + 23), cp["status_label"], f_status, rgb(pal["muted"]), tracking=3.0)
+    dot_x = PAD + int(label_w) + 22
+    d.ellipse([dot_x, by + 31, dot_x + 14, by + 45], fill=rgba(pal["ember"], 255))
+    draw_tracked(canvas, (dot_x + 24, by + 23), cp["status_value"], f_status, rgb(pal["ember"]), tracking=3.0)
     draw_tracked(canvas, (PANEL_W - PAD - 40, by + 23), "01", mono(22, bold=True),
                  rgb(pal["muted"]), tracking=2.6)
 
@@ -412,7 +529,8 @@ BULLET_SIZE = 26        # -> 13 display px
 DIAGRAM_TOP, BOX_H, ROW_PITCH = 150, 84, 118
 
 
-def card_shell(pal: dict, index: str, chip: str) -> Image.Image:
+def card_shell(pal: dict, index: str, lang: str) -> Image.Image:
+    cp = CARD_COPY[lang]
     canvas = Image.new("RGBA", (CARD_W, CARD_H), rgb(pal["panel"]) + (255,))
     canvas.alpha_composite(grid_overlay((CARD_W, CARD_H), pal["line"], pal["grid_alpha"] - 8, 64))
     d = ImageDraw.Draw(canvas)
@@ -420,8 +538,9 @@ def card_shell(pal: dict, index: str, chip: str) -> Image.Image:
     d.rectangle([0, 0, CARD_W, 62], fill=rgb(pal["surface"]) + (255,))
     hairline(d, 0, 62, CARD_W, 62, pal["crimson"], 170, 3)
     draw_tracked(canvas, (44, 16), index, mono(28, bold=True), rgb(pal["crimson"]), tracking=1.4)
-    draw_tracked(canvas, (100, 20), "// 项目", sans(23, "Bold"), rgb(pal["muted"]), tracking=3.0)
+    draw_tracked(canvas, (100, 20), cp["section"], sans(23, "Bold"), rgb(pal["muted"]), tracking=3.0)
 
+    chip = cp["chip"]
     cw = measure(d, chip, sans(23), 2.6)
     bx1, bx0 = CARD_W - 44, CARD_W - 44 - cw - 44
     d.rounded_rectangle([bx0, 11, bx1, 51], radius=6, outline=rgba(pal["crimson"], 200), width=2)
@@ -534,80 +653,52 @@ def diagram_panel(canvas: Image.Image, pal: dict, caption: str, tech: str) -> in
     return X0
 
 
-def build_card_tessera(pal: dict) -> Image.Image:
-    canvas = card_shell(pal, "01", "私有仓库")
-    y = card_header(canvas, pal, "TESSERA", "多服务 AI 平台")
-    card_bullets(canvas, pal, [
-        "云端和本地 GGUF 走同一套 provider 接口",
-        "熔断、排队、每日额度，按账本管",
-        "流式输出里夹带的元数据，边收边剥离",
-        "角色设定：编译 → 发布 → 泄漏检查",
-        "运维面：迁移、保留期清理、运行时设置",
-    ], 44, y, BULLET_W)
+def build_card_tessera(pal: dict, lang: str = "zh") -> Image.Image:
+    cp = CARD_COPY[lang]["tessera"]
+    canvas = card_shell(pal, "01", lang)
+    y = card_header(canvas, pal, "TESSERA", cp["subtitle"])
+    card_bullets(canvas, pal, cp["bullets"], 44, y, BULLET_W)
 
-    X0 = diagram_panel(canvas, pal, "一次请求的路径",
-                       "asyncio · httpx · FastAPI · SQLAlchemy · Postgres")
+    X0 = diagram_panel(canvas, pal, cp["caption"], cp["tech"])
     d = ImageDraw.Draw(canvas)
-    r1, r2, r3, r4 = (DIAGRAM_TOP + i * ROW_PITCH for i in range(4))
-    b = lambda x, y, w: (X0 + x, y, X0 + x + w, y + BOX_H)  # noqa: E731
+    r = [None, DIAGRAM_TOP, DIAGRAM_TOP + ROW_PITCH, DIAGRAM_TOP + 2 * ROW_PITCH, DIAGRAM_TOP + 3 * ROW_PITCH]
+    b = lambda x, row, w: (X0 + x, r[row], X0 + x + w, r[row] + BOX_H)  # noqa: E731
 
-    diagram_box(d, pal, b(0, r1, 348), "客户端", "网页对话 · 个人 API")
-    diagram_box(d, pal, b(388, r1, 404), "网关", "准入 · 配额 · 预算", accent=True)
-    arrow(d, pal, (X0 + 348, r1 + BOX_H / 2), (X0 + 388, r1 + BOX_H / 2))
+    for x, row, w, label, sub, accent in cp["boxes"]:
+        diagram_box(d, pal, b(x, row, w), label, sub, accent=accent)
 
-    diagram_box(d, pal, b(388, r2, 404), "注册表", "按请求取 provider 快照")
-    arrow(d, pal, (X0 + 590, r1 + BOX_H), (X0 + 590, r2))
-
-    diagram_box(d, pal, b(40, r3, 330), "本地节点", "llama.cpp · GGUF")
-    diagram_box(d, pal, b(410, r3, 330), "云端", "OpenAI 兼容")
-    arrow(d, pal, (X0 + 480, r2 + BOX_H), (X0 + 205, r3))
-    arrow(d, pal, (X0 + 700, r2 + BOX_H), (X0 + 575, r3))
-    arrow(d, pal, (X0 + 370, r3 + BOX_H / 2), (X0 + 410, r3 + BOX_H / 2))
-
-    diagram_box(d, pal, b(40, r4, 330), "熔断器", "忙不算故障")
-    diagram_box(d, pal, b(410, r4, 330), "回退链", "有序 · 带遥测")
-    arrow(d, pal, (X0 + 205, r3 + BOX_H), (X0 + 205, r4))
-    arrow(d, pal, (X0 + 575, r3 + BOX_H), (X0 + 575, r4))
+    arrow(d, pal, (X0 + 348, r[1] + BOX_H / 2), (X0 + 388, r[1] + BOX_H / 2))
+    arrow(d, pal, (X0 + 590, r[1] + BOX_H), (X0 + 590, r[2]))
+    arrow(d, pal, (X0 + 480, r[2] + BOX_H), (X0 + 205, r[3]))
+    arrow(d, pal, (X0 + 700, r[2] + BOX_H), (X0 + 575, r[3]))
+    arrow(d, pal, (X0 + 370, r[3] + BOX_H / 2), (X0 + 410, r[3] + BOX_H / 2))
+    arrow(d, pal, (X0 + 205, r[3] + BOX_H), (X0 + 205, r[4]))
+    arrow(d, pal, (X0 + 575, r[3] + BOX_H), (X0 + 575, r[4]))
     check_geometry("tessera")
     return canvas.convert("RGB")
 
 
-def build_card_aurora(pal: dict) -> Image.Image:
-    canvas = card_shell(pal, "02", "私有仓库")
-    y = card_header(canvas, pal, "AURORA", "电路识别与拓扑还原")
-    card_bullets(canvas, pal, [
-        "规则引擎说不准就不猜，宁可少连一根",
-        "导线用并查集聚类，环路用 Prim MST 收尾",
-        "每条边都记着为什么存在，错了能回溯",
-        "串并联看主轴方向，另外带一道短路校验",
-        "浏览器里跑 YOLO，WebGPU 不行就退 WASM",
-    ], 44, y, BULLET_W)
+def build_card_aurora(pal: dict, lang: str = "zh") -> Image.Image:
+    cp = CARD_COPY[lang]["aurora"]
+    canvas = card_shell(pal, "02", lang)
+    y = card_header(canvas, pal, "AURORA", cp["subtitle"])
+    card_bullets(canvas, pal, cp["bullets"], 44, y, BULLET_W)
 
-    X0 = diagram_panel(canvas, pal, "照片 → 结构化电路",
-                       "ultralytics · torch · onnxruntime · tensorrt · ort-web")
+    X0 = diagram_panel(canvas, pal, cp["caption"], cp["tech"])
     d = ImageDraw.Draw(canvas)
-    r1, r2, r3, r4 = (DIAGRAM_TOP + i * ROW_PITCH for i in range(4))
-    b = lambda x, y, w: (X0 + x, y, X0 + x + w, y + BOX_H)  # noqa: E731
+    r = [None, DIAGRAM_TOP, DIAGRAM_TOP + ROW_PITCH, DIAGRAM_TOP + 2 * ROW_PITCH, DIAGRAM_TOP + 3 * ROW_PITCH]
+    b = lambda x, row, w: (X0 + x, r[row], X0 + x + w, r[row] + BOX_H)  # noqa: E731
 
-    diagram_box(d, pal, b(0, r1, 268), "照片", "课堂实验")
-    diagram_box(d, pal, b(308, r1, 442), "检测器", "PT / ONNX / TensorRT", accent=True)
-    arrow(d, pal, (X0 + 268, r1 + BOX_H / 2), (X0 + 308, r1 + BOX_H / 2))
+    for x, row, w, label, sub, accent in cp["boxes"]:
+        diagram_box(d, pal, b(x, row, w), label, sub, accent=accent)
 
-    diagram_box(d, pal, b(40, r2, 330), "规则引擎", "确定性 · 可解释")
-    diagram_box(d, pal, b(410, r2, 330), "LLM 层", "云端 + 本地 GGUF")
-    arrow(d, pal, (X0 + 420, r1 + BOX_H), (X0 + 205, r2))
-    arrow(d, pal, (X0 + 590, r1 + BOX_H), (X0 + 575, r2))
-
-    diagram_box(d, pal, b(160, r3, 428), "nodes + edges", "同一份 JSON 契约", accent=True)
-    arrow(d, pal, (X0 + 205, r2 + BOX_H), (X0 + 300, r3))
-    arrow(d, pal, (X0 + 575, r2 + BOX_H), (X0 + 448, r3))
-
-    for bx, label, sub in ((40, "画布", "可编辑"),
-                           (292, "导出", "PNG · JSON"),
-                           (544, "解释", "决策路径")):
-        diagram_box(d, pal, b(bx, r4, 236), label, sub)
+    arrow(d, pal, (X0 + 268, r[1] + BOX_H / 2), (X0 + 308, r[1] + BOX_H / 2))
+    arrow(d, pal, (X0 + 420, r[1] + BOX_H), (X0 + 205, r[2]))
+    arrow(d, pal, (X0 + 590, r[1] + BOX_H), (X0 + 575, r[2]))
+    arrow(d, pal, (X0 + 205, r[2] + BOX_H), (X0 + 300, r[3]))
+    arrow(d, pal, (X0 + 575, r[2] + BOX_H), (X0 + 448, r[3]))
     for cx in (X0 + 158, X0 + 410, X0 + 662):
-        arrow(d, pal, (X0 + 374, r3 + BOX_H), (cx, r4))
+        arrow(d, pal, (X0 + 374, r[3] + BOX_H), (cx, r[4]))
     check_geometry("aurora")
     return canvas.convert("RGB")
 
@@ -754,8 +845,11 @@ AI_TOOLS = [
     },
     {
         "name": "DSH",
-        "tile": ("#4D6BFE", "#4D6BFE"),
-        "mark": ("#FFFFFF", "#FFFFFF"),
+        # The mark is a neutral glyph, so the tile tracks the theme like
+        # Copilot's and Codex's: dark #242938 / light #F4F2ED, and the fish
+        # inverts with it (white on dark, near-black on light).
+        "tile": ("#242938", "#F4F2ED"),
+        "mark": ("#FFFFFF", "#161614"),
         "viewBox": "0 0 50 50",
         "paths": (
             "M48.8354 10.0479C48.3232 9.79199 48.1025 10.2798 47.8032 10.5278C47.7007 10.6079 47.6143 10.7119 47.5273 10.8076C46.7793 11.624 45.9048 12.1597 44.7622 12.0957C43.0923 12 41.666 12.5356 40.4058 13.8398C40.1377 12.2319 39.2476 11.272 37.8926 10.6558C37.1836 10.3359 36.4668 10.0156 35.9702 9.31982C35.6235 8.82373 35.5293 8.27197 35.356 7.72754C35.2456 7.3999 35.1353 7.06396 34.7651 7.00781C34.3633 6.94385 34.2056 7.2876 34.0479 7.57568C33.418 8.75195 33.1733 10.0479 33.1973 11.3599C33.2524 14.312 34.4736 16.6641 36.8999 18.3359C37.1758 18.5278 37.2466 18.7197 37.1597 19C36.9946 19.5757 36.7974 20.1357 36.624 20.7119C36.5137 21.0801 36.3486 21.1597 35.9624 21C34.6309 20.4321 33.481 19.5918 32.4644 18.5757C30.7393 16.8721 29.1792 14.9917 27.2334 13.52C26.7764 13.1758 26.3193 12.856 25.8467 12.5518C23.8618 10.584 26.1069 8.96777 26.627 8.77588C27.1704 8.57568 26.8159 7.8877 25.0591 7.896C23.3022 7.90381 21.6953 8.50391 19.647 9.30371C19.3477 9.42383 19.0322 9.51172 18.7095 9.58398C16.8501 9.22363 14.9199 9.14355 12.9033 9.37598C9.10596 9.80762 6.07275 11.6396 3.84326 14.7681C1.16455 18.5278 0.53418 22.7998 1.30664 27.2559C2.11768 31.9521 4.46582 35.8398 8.07373 38.8799C11.8159 42.0322 16.1255 43.5762 21.041 43.2803C24.0269 43.104 27.3516 42.6963 31.1016 39.4561C32.0469 39.936 33.0396 40.1279 34.686 40.272C35.9546 40.3921 37.1758 40.208 38.1211 40.0078C39.6021 39.688 39.4995 38.2881 38.9639 38.0322C34.623 35.9678 35.5762 36.8081 34.71 36.1279C36.9155 33.4639 40.2402 30.6958 41.54 21.728C41.6426 21.0161 41.5557 20.5679 41.54 19.9917C41.5322 19.6396 41.6108 19.5039 42.0049 19.4639C43.0923 19.3359 44.1479 19.0317 45.1167 18.4878C47.9292 16.9199 49.064 14.3438 49.3315 11.2559C49.3711 10.7837 49.3237 10.2959 48.8354 10.0479ZM24.3262 37.8398C20.1196 34.4639 18.0791 33.3521 17.2358 33.3999C16.4482 33.4482 16.5898 34.3682 16.7632 34.9678C16.9443 35.5601 17.1812 35.9683 17.5117 36.4878C17.7402 36.832 17.8979 37.3442 17.2832 37.728C15.9282 38.584 13.5728 37.4399 13.4624 37.3838C10.7207 35.7358 8.42822 33.5601 6.81348 30.584C5.25342 27.7197 4.34766 24.6479 4.19775 21.3677C4.1582 20.5757 4.38672 20.2959 5.15869 20.1519C6.17529 19.96 7.22314 19.9199 8.23926 20.0718C12.5327 20.7119 16.1885 22.6719 19.2529 25.7759C21.002 27.5439 22.3252 29.6558 23.6885 31.7202C25.1377 33.9121 26.6978 36 28.6831 37.7119C29.3843 38.312 29.9434 38.7681 30.479 39.104C28.8643 39.2881 26.1699 39.3281 24.3262 37.8398ZM26.3433 24.6001C26.3433 24.248 26.6191 23.9678 26.9658 23.9678C27.0444 23.9678 27.1152 23.9839 27.1782 24.0078C27.2651 24.04 27.3438 24.0879 27.4067 24.1602C27.5171 24.272 27.5801 24.4321 27.5801 24.6001C27.5801 24.9521 27.3042 25.2319 26.9575 25.2319C26.6108 25.2319 26.3433 24.9521 26.3433 24.6001ZM32.6064 27.8799C32.2046 28.0479 31.8027 28.1919 31.4165 28.208C30.8179 28.2397 30.1641 27.9922 29.8096 27.688C29.2583 27.2158 28.8643 26.9521 28.6987 26.1279C28.6279 25.7759 28.6675 25.2319 28.7305 24.9199C28.8721 24.248 28.7144 23.8159 28.2495 23.4238C27.8716 23.104 27.3911 23.0161 26.8633 23.0161C26.666 23.0161 26.4849 22.9277 26.3511 22.856C26.1304 22.7441 25.9492 22.4639 26.1226 22.1201C26.1777 22.0078 26.4458 21.7358 26.5088 21.688C27.2256 21.272 28.0527 21.4077 28.8169 21.7197C29.5259 22.0161 30.0615 22.5601 30.834 23.3281C31.6216 24.2559 31.7632 24.5117 32.2124 25.208C32.5669 25.752 32.8901 26.312 33.1104 26.9521C33.2446 27.3521 33.0713 27.6802 32.6064 27.8799Z",
@@ -896,14 +990,21 @@ def main() -> int:
 
     if args.only in ("all", "hero"):
         print("hero:")
-        for pal in (DARK, LIGHT):
-            save(build_hero(pal, root), ASSETS / "hero" / f"hero-{pal['name']}.webp")
+        for lang in ("zh", "en"):
+            for pal in (DARK, LIGHT):
+                suffix = "" if lang == "zh" else "-en"
+                save(build_hero(pal, root, lang),
+                     ASSETS / "hero" / f"hero{suffix}-{pal['name']}.webp")
 
     if args.only in ("all", "cards"):
         print("project cards:")
-        for pal in (DARK, LIGHT):
-            save(build_card_tessera(pal), ASSETS / "projects" / f"tessera-{pal['name']}.webp")
-            save(build_card_aurora(pal), ASSETS / "projects" / f"aurora-{pal['name']}.webp")
+        for lang in ("zh", "en"):
+            for pal in (DARK, LIGHT):
+                suffix = "" if lang == "zh" else "-en"
+                save(build_card_tessera(pal, lang),
+                     ASSETS / "projects" / f"tessera{suffix}-{pal['name']}.webp")
+                save(build_card_aurora(pal, lang),
+                     ASSETS / "projects" / f"aurora{suffix}-{pal['name']}.webp")
 
     if args.only in ("all", "divider"):
         print("dividers:")

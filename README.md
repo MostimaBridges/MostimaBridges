@@ -220,10 +220,4 @@ Python 和原生 JS 是主力，Vue / TypeScript 用在在线课程那套上。<
 
 <img src="./assets/icons/monogram.svg" width="34" alt="" />
 
-<p align="center">
-  <a href="./README.md"><img src="./assets/icons/lang-zh-active.svg" height="30" alt="中文（当前语言）" /></a>
-  &nbsp;
-  <a href="./README.en.md"><img src="./assets/icons/lang-en-idle.svg" height="30" alt="Switch to English" /></a>
-</p>
-
 </div>
