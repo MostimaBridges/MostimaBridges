@@ -3,7 +3,7 @@
   ========
   * 图片全部放在 assets/ 下自己托管。只有 typing 副标题和 Skill Icons 走第三方，
     它们挂掉不影响阅读。
-  * 中英切换：顶部与底部那两枚胶囊是 README.md 与 README.en.md 之间唯一的入口，
+  * 中英切换：顶部那两枚胶囊是 README.md 与 README.en.md 之间唯一的入口，
     两边链接必须成对存在，check_readme.py 会检查互链。
   * dark / light 用 <picture> 切换，兜底的 <img> 一律指向 light 版本，
     这样不认 media query 的客户端也不会在浅色页面上出现一块黑图。
@@ -28,20 +28,20 @@
   <source media="(prefers-color-scheme: dark)" srcset="./assets/hero/hero-dark.webp" />
   <source media="(prefers-color-scheme: light)" srcset="./assets/hero/hero-light.webp" />
   <img src="./assets/hero/hero-light.webp" width="100%"
-       alt="MostimaBridges 标题卡：AI · LLM 系统、本地 + 云端推理、全栈服务，配血色月亮前的持镰角色插画。" />
+       alt="MostimaBridges 标题卡：个人建站与 AI 应用、云端中转与本地模型、前后端与运维，配血色月亮前的持镰角色插画。" />
 </picture>
 
 **Strands** · [@MostimaBridges](https://github.com/MostimaBridges)
 
-主要在做 AI 应用和本地模型，顺手把几个自己天天要用的东西做成了能跑起来的样子。
+个人开发者，平时写 Web 全栈和 AI 应用——从给喜欢的游戏手搓站点起步，也给自己搭了不少日常顺手的工具。
 
 <picture>
   <source media="(prefers-color-scheme: dark)"
-          srcset="https://readme-typing-svg.demolab.com?font=Noto+Sans+SC&weight=500&size=19&duration=2600&pause=800&center=true&vCenter=true&width=900&height=46&color=FF4D7E&lines=%E5%9C%A8%E6%8A%98%E8%85%BE%E6%9C%AC%E5%9C%B0%E6%A8%A1%E5%9E%8B%E5%92%8C%20AI%20%E5%BA%94%E7%94%A8%3B%E6%8A%8A%E8%83%BD%E8%B7%91%E7%9A%84%20Demo%20%E6%85%A2%E6%85%A2%E6%94%B9%E6%88%90%E7%9C%9F%E7%9A%84%E7%B3%BB%E7%BB%9F%3B%E7%BB%8F%E5%B8%B8%E5%92%8C%20Nginx%E3%80%81Windows%E3%80%81CUDA%20%E6%89%93%E4%BA%A4%E9%81%93%3B%E6%9C%80%E8%BF%91%E5%9C%A8%E7%9C%8B%E7%94%B5%E8%B7%AF%E8%AF%86%E5%88%AB%E5%92%8C%E5%A4%9A%E6%A8%A1%E5%9E%8B%E8%B7%AF%E7%94%B1" />
+          srcset="https://readme-typing-svg.demolab.com?font=Noto+Sans+SC&weight=500&size=19&duration=2600&pause=800&center=true&vCenter=true&width=900&height=46&color=FF4D7E&lines=%E7%BB%99%E5%96%9C%E6%AC%A2%E7%9A%84%E6%B8%B8%E6%88%8F%E6%89%8B%E6%90%93%20Wiki%EF%BC%8C%E9%A1%BA%E6%89%8B%E5%86%99%E4%BA%86%E5%A5%97%E5%85%A8%E6%A0%88%E5%90%8E%E5%8F%B0%3B%E6%8A%8A%E4%BA%91%E7%AB%AF%20API%20%E5%92%8C%E5%AE%B6%E9%87%8C%E6%98%BE%E5%8D%A1%E7%9A%84%20GGUF%20%E5%87%91%E6%88%90%E8%87%AA%E7%94%A8%20AI%20%E4%B8%AD%E8%BD%AC%E7%AB%99%3B%E6%8B%8D%E5%BC%A0%E7%94%B5%E8%B7%AF%E7%85%A7%E7%89%87%E8%BF%98%E5%8E%9F%E6%8B%93%E6%89%91%E5%9B%BE%EF%BC%8C%E6%AF%94%E8%B5%9B%E6%8B%BF%E8%BF%87%E5%9B%BD%E4%B8%80%3B%E5%9C%A8%20Windows%20%E5%86%99%E4%BB%A3%E7%A0%81%EF%BC%8C%E6%9C%8D%E5%8A%A1%E5%B0%BD%E9%87%8F%E4%BF%9D%E4%BD%8F%20Linux%20%E8%83%BD%E8%B7%91" />
   <source media="(prefers-color-scheme: light)"
-          srcset="https://readme-typing-svg.demolab.com?font=Noto+Sans+SC&weight=500&size=19&duration=2600&pause=800&center=true&vCenter=true&width=900&height=46&color=C2185B&lines=%E5%9C%A8%E6%8A%98%E8%85%BE%E6%9C%AC%E5%9C%B0%E6%A8%A1%E5%9E%8B%E5%92%8C%20AI%20%E5%BA%94%E7%94%A8%3B%E6%8A%8A%E8%83%BD%E8%B7%91%E7%9A%84%20Demo%20%E6%85%A2%E6%85%A2%E6%94%B9%E6%88%90%E7%9C%9F%E7%9A%84%E7%B3%BB%E7%BB%9F%3B%E7%BB%8F%E5%B8%B8%E5%92%8C%20Nginx%E3%80%81Windows%E3%80%81CUDA%20%E6%89%93%E4%BA%A4%E9%81%93%3B%E6%9C%80%E8%BF%91%E5%9C%A8%E7%9C%8B%E7%94%B5%E8%B7%AF%E8%AF%86%E5%88%AB%E5%92%8C%E5%A4%9A%E6%A8%A1%E5%9E%8B%E8%B7%AF%E7%94%B1" />
-  <img src="https://readme-typing-svg.demolab.com?font=Noto+Sans+SC&weight=500&size=19&duration=2600&pause=800&center=true&vCenter=true&width=900&height=46&color=C2185B&lines=%E5%9C%A8%E6%8A%98%E8%85%BE%E6%9C%AC%E5%9C%B0%E6%A8%A1%E5%9E%8B%E5%92%8C%20AI%20%E5%BA%94%E7%94%A8%3B%E6%8A%8A%E8%83%BD%E8%B7%91%E7%9A%84%20Demo%20%E6%85%A2%E6%85%A2%E6%94%B9%E6%88%90%E7%9C%9F%E7%9A%84%E7%B3%BB%E7%BB%9F%3B%E7%BB%8F%E5%B8%B8%E5%92%8C%20Nginx%E3%80%81Windows%E3%80%81CUDA%20%E6%89%93%E4%BA%A4%E9%81%93%3B%E6%9C%80%E8%BF%91%E5%9C%A8%E7%9C%8B%E7%94%B5%E8%B7%AF%E8%AF%86%E5%88%AB%E5%92%8C%E5%A4%9A%E6%A8%A1%E5%9E%8B%E8%B7%AF%E7%94%B1"
-       alt="在折腾本地模型和 AI 应用；把能跑的 Demo 慢慢改成真的系统；经常和 Nginx、Windows、CUDA 打交道；最近在看电路识别和多模型路由。" />
+          srcset="https://readme-typing-svg.demolab.com?font=Noto+Sans+SC&weight=500&size=19&duration=2600&pause=800&center=true&vCenter=true&width=900&height=46&color=C2185B&lines=%E7%BB%99%E5%96%9C%E6%AC%A2%E7%9A%84%E6%B8%B8%E6%88%8F%E6%89%8B%E6%90%93%20Wiki%EF%BC%8C%E9%A1%BA%E6%89%8B%E5%86%99%E4%BA%86%E5%A5%97%E5%85%A8%E6%A0%88%E5%90%8E%E5%8F%B0%3B%E6%8A%8A%E4%BA%91%E7%AB%AF%20API%20%E5%92%8C%E5%AE%B6%E9%87%8C%E6%98%BE%E5%8D%A1%E7%9A%84%20GGUF%20%E5%87%91%E6%88%90%E8%87%AA%E7%94%A8%20AI%20%E4%B8%AD%E8%BD%AC%E7%AB%99%3B%E6%8B%8D%E5%BC%A0%E7%94%B5%E8%B7%AF%E7%85%A7%E7%89%87%E8%BF%98%E5%8E%9F%E6%8B%93%E6%89%91%E5%9B%BE%EF%BC%8C%E6%AF%94%E8%B5%9B%E6%8B%BF%E8%BF%87%E5%9B%BD%E4%B8%80%3B%E5%9C%A8%20Windows%20%E5%86%99%E4%BB%A3%E7%A0%81%EF%BC%8C%E6%9C%8D%E5%8A%A1%E5%B0%BD%E9%87%8F%E4%BF%9D%E4%BD%8F%20Linux%20%E8%83%BD%E8%B7%91" />
+  <img src="https://readme-typing-svg.demolab.com?font=Noto+Sans+SC&weight=500&size=19&duration=2600&pause=800&center=true&vCenter=true&width=900&height=46&color=C2185B&lines=%E7%BB%99%E5%96%9C%E6%AC%A2%E7%9A%84%E6%B8%B8%E6%88%8F%E6%89%8B%E6%90%93%20Wiki%EF%BC%8C%E9%A1%BA%E6%89%8B%E5%86%99%E4%BA%86%E5%A5%97%E5%85%A8%E6%A0%88%E5%90%8E%E5%8F%B0%3B%E6%8A%8A%E4%BA%91%E7%AB%AF%20API%20%E5%92%8C%E5%AE%B6%E9%87%8C%E6%98%BE%E5%8D%A1%E7%9A%84%20GGUF%20%E5%87%91%E6%88%90%E8%87%AA%E7%94%A8%20AI%20%E4%B8%AD%E8%BD%AC%E7%AB%99%3B%E6%8B%8D%E5%BC%A0%E7%94%B5%E8%B7%AF%E7%85%A7%E7%89%87%E8%BF%98%E5%8E%9F%E6%8B%93%E6%89%91%E5%9B%BE%EF%BC%8C%E6%AF%94%E8%B5%9B%E6%8B%BF%E8%BF%87%E5%9B%BD%E4%B8%80%3B%E5%9C%A8%20Windows%20%E5%86%99%E4%BB%A3%E7%A0%81%EF%BC%8C%E6%9C%8D%E5%8A%A1%E5%B0%BD%E9%87%8F%E4%BF%9D%E4%BD%8F%20Linux%20%E8%83%BD%E8%B7%91"
+       alt="给喜欢的游戏手搓 Wiki，顺手写了套全栈后台；把云端 API 和家里显卡的 GGUF 凑成自用 AI 中转站；拍张电路照片还原拓扑图，比赛拿过国一；在 Windows 写代码，服务尽量保住 Linux 能跑。" />
 </picture>
 
 </div>
@@ -57,25 +57,9 @@
 <!-- ============================ 关于我 ============================ -->
 ## // 关于我
 
-主要在做 AI 应用。云端 API 和本地 GGUF 模型走同一套接口，路由、回退、流式输出、额度控制这些都得自己写。比起把模型调通，我更在意它跑起来之后稳不稳。
+相比搓一个只管亮一次的 Demo，我更在意写出来的东西自己平时愿不愿意用、过几个月还稳不稳。很多折腾到最后都只是为了省事：少在几个平台之间来回切换，少重复接一次接口，或者把靠人眼盯半天的活儿交给脚本。
 
-另外有一套电路识别的项目，从拍照到还原拓扑，规则引擎和 LLM 各管一段。平时 Windows 上用得多，但部署尽量保持 Linux 也能跑。
-
-<p align="center">
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="./assets/ornaments/divider-dark.webp" />
-  <source media="(prefers-color-scheme: light)" srcset="./assets/ornaments/divider-light.webp" />
-  <img src="./assets/ornaments/divider-light.webp" width="100%" alt="" />
-</picture>
-</p>
-
-<!-- ========================== 最近在折腾 ========================== -->
-## // 最近在折腾
-
-- **多模型服务** — 后台能改 provider 配置，下一次请求就生效；本地节点不通就自动切云端。
-- **本地推理** — llama.cpp、GGUF、显存和内存占用，研究怎么在家里这台机器上跑得舒服一点。
-- **电路识别** — 把课堂电路照片变成能编辑、能校验的拓扑图。认出元件不难，难的是把导线关系弄对。
-- **Windows 工具链** — 打包、诊断、回滚脚本，用得最多的还是 PowerShell。
+技术选型上偏向够用就好——页面简单就直接上原生 JS，懒得为了一个小站背一整套构建工具；后端习惯用 Python 和 FastAPI 把服务支起来。日常主力是 Windows，打包、巡检、回滚写得最顺手的是 PowerShell，前面再套一层 Nginx；写业务代码的时候也会留个心眼，尽量保证服务搬去 Linux 也能直接跑。
 
 <p align="center">
 <picture>
@@ -88,49 +72,37 @@
 <!-- ============================= 项目 ============================= -->
 ## // 项目
 
-两个都是私有仓库，源码不方便公开，这里只写做法。
+下面两个项目目前都是私有仓库，源码不放出来，这里只聊聊它们分别是干嘛的、大概怎么做的。
 
 <p align="center">
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="./assets/projects/tessera-dark.webp" />
   <source media="(prefers-color-scheme: light)" srcset="./assets/projects/tessera-light.webp" />
   <img src="./assets/projects/tessera-light.webp" width="100%"
-       alt="TESSERA 卡片：一次请求的路径，从客户端经网关、注册表到本地节点和云端，后面跟着熔断器和回退链。" />
+       alt="TESSERA 项目卡：前台是游戏资料 Wiki 与课程子站，后台是自用 AI 网关，把本地显卡节点和云端 API 接到同一套接口上，并带健康检查与自动切换。" />
 </picture>
 </p>
 
-#### TESSERA · 多服务 AI 平台 `私有`
+#### TESSERA · 游戏 Wiki 与个人 AI 中转站 `私有`
 
-最初是前端课的大作业：静态 HTML 加 jQuery，给一个游戏做设定 Wiki，角色、物品、世界观、攻略各一页。最早的提交信息就叫「1」，改懒加载那次叫「懒加载啊啊啊啊啊啊」。
+最初只是前端课的大作业：用静态 HTML 配 jQuery 给喜欢的游戏做个设定 Wiki，角色、物品、世界观、攻略各写一页（最早的提交记录甚至就叫「1」，改懒加载那次叫「懒加载啊啊啊啊啊啊」）。后来每添一条词条都要手动改 HTML 实在太累，干脆把数据抽出来加了后端，又把一个课程子站也并了进来。Wiki 和子站这些前台页面一直保留在最前面，到现在也还是原生 JS，没上框架也没用打包器。
 
-做下去发现每改一条词条都得动 HTML，就把数据抽出来，三月加了后端，四月另外两个站并进来做成子域名，AI 那层是八月才长出来的。现在平台的核心是自己写的一套 LLM 服务层，当初那些页面反倒成了它的门面 —— 前端到现在仍是原生 JS，没上框架也没打包器。
-
-后台改完 provider 配置，下一次请求就生效，不用重启。几条当时觉得麻烦、后来证明值得的：
-
-- 云端和本地模型走同一套流式接口，一边不通就换另一边
-- 熔断器把「忙」和「坏」分开看 —— 排队时不判死，真挂了才切
-- 流式输出里混着的元数据边收边剥，不污染正文和历史
-- 每日额度按「预留 → 结算」记，请求中途崩了不会把额度吃掉
-- 角色设定走编译 → 发布 → 泄漏检查，发布前会拦一道
-- 本地推理机有八层体检：监听、SSH、数据面、运行时、模型、鉴权、网关
+真正花时间折腾的是后来长出来的后台——它其实是一个**只给我自己用的 AI Token / API 中转站**，从没对外开放，也不打算做成公共服务。平时写别的小工具或者调模型时，不管是商业云端 API 还是家里显卡跑的本地 GGUF 模型，统一走这一个入口。哪家线路要改权重、限额度或者临时换模型，在网页后台改完下一次请求就生效，不用重启服务；本地节点是在排队忙还是真掉线也能分得清，真不通了会自动切去备用源，流式输出里夹杂的多余标记会边收边洗掉，再配上几条日常运维脚本，基本不用天天盯着后台看。
 
 <p align="center">
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="./assets/projects/aurora-dark.webp" />
   <source media="(prefers-color-scheme: light)" srcset="./assets/projects/aurora-light.webp" />
   <img src="./assets/projects/aurora-light.webp" width="100%"
-       alt="AURORA 卡片：照片经检测器后分别走规则引擎和 LLM 层，两边输出同一份 nodes 与 edges 契约，再驱动画布、导出和决策路径解释。" />
+       alt="AURORA 项目卡：拍一张实验电路照片，经 YOLO 元件检测后，由图算法引擎和大模型一起理顺导线并生成拓扑图，支持画布编辑、结果导出和过程回溯。" />
 </picture>
 </p>
 
-#### AURORA · 电路识别与拓扑还原 `私有`
+#### AURORA · 实验电路识别与拓扑还原 `私有`
 
-一开始只是想把课堂电路图识别出来。做下去才发现，认出元件不难，难的是把导线关系还原成一张靠谱的拓扑图。
+这是一个拿过国家级一等奖的比赛项目，做的事情很直接：拿手机拍一张课堂上的实验电路照片，自动还原成一张能编辑、能校验的电路拓扑图。
 
-- 证据不够就不猜。宁可返回「未知」，也不编一条看起来合理的边
-- 导线用并查集聚类，环路用 Prim MST 收，避免连线在图上乱飞
-- 每条边都记着自己是怎么来的，答错了能查到是哪一步
-- 浏览器里直接跑 YOLO，WebGPU 不行就退到 WASM
+上手之后才发现，把电阻、开关、电源这些元件认出来其实不难，最麻烦的是把乱七八糟的导线关系理清楚——跳线交叉、反光或者手挡住一角，单靠视觉模型很容易顺手瞎连。所以我们的思路是先让目标检测找到元件位置，再结合图算法和大模型去推理导线怎么接；要是画面里证据实在不够，程序会直接把这段连线标成待确认留给人去点，不去硬猜一条看似合理的线，而且每条线是怎么连起来的都能回头查到依据。为了用起来够轻，检测模型还可以直接在浏览器里跑，不靠后端服务器也能先出结果。
 
 <p align="center">
 <picture>
@@ -170,11 +142,11 @@
 </picture>
 </p>
 
-Python 和原生 JS 是主力，Vue / TypeScript 用在在线课程那套上。<br>
-模型侧跑 `llama.cpp` + GGUF，视觉侧是 YOLO + `ONNX Runtime`。<br>
-部署基本是 Nginx 加 Windows 服务，能搬去 Linux 的尽量搬。
+主力还是 Python 和原生 JS；需要偏重一点的前端交互时，也会用 Vue 和 TypeScript。<br>
+本地模型这边主要跑 `llama.cpp` + GGUF，视觉相关则是 YOLO 配 `ONNX Runtime`。<br>
+服务端平时是 Nginx 配 Windows 服务撑着，有空也在把能挪的东西一点点迁往 Linux。
 
-写代码基本都在 Copilot 和 Codex 里完成；DSH 和 AstrBot 是最近在折腾的 agent 方向。
+写代码经常开着 Copilot 和 Codex 搭把手；DSH 和 AstrBot 是最近业余在玩的 Agent 方向。
 
 <p align="center">
 <picture>
@@ -214,9 +186,7 @@ Python 和原生 JS 是主力，Vue / TypeScript 用在在线课程那套上。<
 <img src="./assets/misc/strand-portrait.webp" width="180"
      alt="自设角色的半身像，裁成柔和的菱形并镶了一道暗红描边。" />
 
-上面两个项目都是私有仓库，源码不方便公开，这里只写了做法。
-
-标题图、项目卡、分隔线、monogram 和语言切换按钮都由 <a href="./scripts/build_assets.py">scripts/build_assets.py</a> 生成，配色只维护那一处。
+标题图、项目卡、分隔线、monogram 和语言切换按钮都由 <a href="./scripts/build_assets.py">scripts/build_assets.py</a> 统一生成，配色只维护在那一处。
 
 <img src="./assets/icons/monogram.svg" width="34" alt="" />
 

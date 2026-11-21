@@ -35,20 +35,20 @@
   <source media="(prefers-color-scheme: dark)" srcset="./assets/hero/hero-en-dark.webp" />
   <source media="(prefers-color-scheme: light)" srcset="./assets/hero/hero-en-light.webp" />
   <img src="./assets/hero/hero-en-light.webp" width="100%"
-       alt="MostimaBridges title card: AI and LLM systems, local plus cloud inference, full-stack services, over artwork of a scythe-wielding figure before a crimson moon." />
+       alt="MostimaBridges title card: web and AI apps, cloud relay plus local models, solo full-stack, over artwork of a scythe-wielding figure before a crimson moon." />
 </picture>
 
 **Strands** · [@MostimaBridges](https://github.com/MostimaBridges)
 
-Mostly AI applications and local models; a few tools I needed every day ended up as things that actually run.
+Solo developer building web apps and AI tools — started with a hand-coded game Wiki, and kept building tools I actually use every day.
 
 <picture>
   <source media="(prefers-color-scheme: dark)"
-          srcset="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&weight=500&size=19&duration=2600&pause=800&center=true&vCenter=true&width=900&height=46&color=FF4D7E&lines=Local+models+and+AI+apps%3BTurning+demos+into+systems+that+stay+up%3BNginx+%2B+Windows+%2B+CUDA+most+days%3BCircuit+recognition+and+multi-model+routing" />
+          srcset="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&weight=500&size=19&duration=2600&pause=800&center=true&vCenter=true&width=900&height=46&color=FF4D7E&lines=Game+Wiki+up+front%2C+private+AI+relay+in+back%3BCloud+APIs+%2B+local+GGUF+on+a+home+GPU%3BLab+circuit+photos+to+editable+topologies%3BWritten+on+Windows%2C+kept+runnable+on+Linux" />
   <source media="(prefers-color-scheme: light)"
-          srcset="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&weight=500&size=19&duration=2600&pause=800&center=true&vCenter=true&width=900&height=46&color=C2185B&lines=Local+models+and+AI+apps%3BTurning+demos+into+systems+that+stay+up%3BNginx+%2B+Windows+%2B+CUDA+most+days%3BCircuit+recognition+and+multi-model+routing" />
-  <img src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&weight=500&size=19&duration=2600&pause=800&center=true&vCenter=true&width=900&height=46&color=C2185B&lines=Local+models+and+AI+apps%3BTurning+demos+into+systems+that+stay+up%3BNginx+%2B+Windows+%2B+CUDA+most+days%3BCircuit+recognition+and+multi-model+routing"
-       alt="Local models and AI apps; turning demos into systems that stay up; Nginx, Windows and CUDA most days; circuit recognition and multi-model routing." />
+          srcset="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&weight=500&size=19&duration=2600&pause=800&center=true&vCenter=true&width=900&height=46&color=C2185B&lines=Game+Wiki+up+front%2C+private+AI+relay+in+back%3BCloud+APIs+%2B+local+GGUF+on+a+home+GPU%3BLab+circuit+photos+to+editable+topologies%3BWritten+on+Windows%2C+kept+runnable+on+Linux" />
+  <img src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&weight=500&size=19&duration=2600&pause=800&center=true&vCenter=true&width=900&height=46&color=C2185B&lines=Game+Wiki+up+front%2C+private+AI+relay+in+back%3BCloud+APIs+%2B+local+GGUF+on+a+home+GPU%3BLab+circuit+photos+to+editable+topologies%3BWritten+on+Windows%2C+kept+runnable+on+Linux"
+       alt="Game Wiki up front, private AI relay in back; Cloud APIs + local GGUF on a home GPU; Lab circuit photos to editable topologies; Written on Windows, kept runnable on Linux." />
 </picture>
 
 </div>
@@ -64,25 +64,9 @@ Mostly AI applications and local models; a few tools I needed every day ended up
 <!-- ============================== ABOUT ============================== -->
 ## // ABOUT
 
-Mostly AI applications. Cloud APIs and local GGUF models sit behind one interface, which means routing, fallback, streaming and quota control are all mine to write. Letting a model answer is the easy part; I care more about whether it is still up a week later.
+Getting a quick demo to reply once is easy; what I care a lot more about is whether something I built still runs cleanly months later when I actually need it. Most of my projects start because I got tired of switching between five tabs, wiring up the same model client twice, or babysitting a task by hand.
 
-There is also a circuit-recognition project: a photo goes in, a topology comes out, with a rule engine and an LLM each owning part of the path. I work on Windows day to day, but try to keep deployments runnable on Linux.
-
-<p align="center">
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="./assets/ornaments/divider-dark.webp" />
-  <source media="(prefers-color-scheme: light)" srcset="./assets/ornaments/divider-light.webp" />
-  <img src="./assets/ornaments/divider-light.webp" width="100%" alt="" />
-</picture>
-</p>
-
-<!-- =============================== NOW =============================== -->
-## // NOW
-
-- **Multi-model serving** — provider config is editable from the admin panel and takes effect on the next request; when a local node is unreachable the request falls back to the cloud.
-- **Local inference** — llama.cpp, GGUF, VRAM and RAM budgets, working out how to make it comfortable on the machine at home.
-- **Circuit recognition** — turning a photo of a classroom circuit into a topology you can edit and validate. Detecting the parts is not the hard part; getting the wires right is.
-- **Windows toolchain** — packaging, diagnostics and rollback scripts. PowerShell is still what I reach for most.
+I tend to keep tooling light unless there's a good reason not to — plain JavaScript works fine for content pages without dragging in a bundler, while Python and FastAPI handle the backend side. Day to day I work mostly on Windows (leaning on PowerShell for packaging, health checks, and rollbacks) behind Nginx, while trying to keep services clean enough to run on Linux when it's time to move them.
 
 <p align="center">
 <picture>
@@ -95,49 +79,37 @@ There is also a circuit-recognition project: a photo goes in, a topology comes o
 <!-- ============================== WORK ============================== -->
 ## // WORK
 
-Both are private repositories, so the source is not something I can publish. This is only about how they are built.
+Both repositories below are private, so the source isn't public — this is just a look at what they actually do and how they came together.
 
 <p align="center">
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="./assets/projects/tessera-en-dark.webp" />
   <source media="(prefers-color-scheme: light)" srcset="./assets/projects/tessera-en-light.webp" />
   <img src="./assets/projects/tessera-en-light.webp" width="100%"
-       alt="TESSERA card: the path of one request, from the clients through the gateway and the provider registry to a local node and the cloud, followed by the circuit breaker and the fallback chain." />
+       alt="TESSERA card: game Wiki and study site up front, backed by a private AI gateway unifying a local GPU node and cloud APIs with health checks and failover." />
 </picture>
 </p>
 
-#### TESSERA · multi-service AI platform `private`
+#### TESSERA · game Wiki & personal AI relay `private`
 
-It began as a front-end course assignment: static HTML plus jQuery, a lore wiki for a game, one page each for characters, items, worldbuilding and guides. The first commit message was literally “1”; the one that added lazy loading was “lazy loading aaaaaa”.
+It began as a front-end class assignment: static HTML and jQuery for a lore Wiki about a game I like, with one page each for characters, items, worldbuilding, and guides. (The very first commit message was literally "1", and the one adding lazy loading was "lazy loading aaaaaa".) Editing raw HTML for every new entry got old fast, so I moved the data out, bolted on a backend, and pulled a companion study sub-site under the same roof. Those original pages — along with the study sub-site — are still the front door, and the front end is still plain JavaScript with no framework and no bundler.
 
-Every new entry meant editing HTML, so the data moved out. A backend arrived in March, two more sites were merged in as subdomains in April, and the AI layer only grew in August. The centre of the platform is now a hand-written LLM serving layer, and those first pages ended up as its shopfront — the front end is still plain JavaScript, with no framework and no bundler.
-
-Changing a provider in the admin panel takes effect on the next request, with no restart. A few things that felt like a hassle at the time turned out to be worth keeping:
-
-- Cloud and local models sit behind one streaming interface, and a request moves to the other side when one is unreachable
-- The circuit breaker separates “busy” from “broken” — a queued node is not judged dead, only a real failure trips it
-- Metadata mixed into the token stream is stripped as it arrives, so it never reaches the visible text or the stored history
-- Daily quota is booked as reserve → settle, so a request that dies halfway cannot quietly eat the budget
-- Character settings go through compile → publish → leakage check, with a gate before release
-- A local inference node gets a layered check: listener, SSH, data plane, runtime, models, auth, gateway
+What takes most of my time now sits behind them: a private AI token and API relay built strictly for myself, never opened to external users. Any tool or page I write talks to this one endpoint, whether a request ends up hitting a cloud API or a local GGUF model running on my GPU at home. I can tweak provider weights, adjust budgets, or swap routes straight from a web admin page without restarting anything. It also tells the difference between a busy queued node and a dead one, fails over to another upstream when something drops, strips stray metadata out of token streams before it clutters chat history, and ships with small ops scripts so it stays out of my hair.
 
 <p align="center">
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="./assets/projects/aurora-en-dark.webp" />
   <source media="(prefers-color-scheme: light)" srcset="./assets/projects/aurora-en-light.webp" />
   <img src="./assets/projects/aurora-en-light.webp" width="100%"
-       alt="AURORA card: a photo passes through the detector and then either the rule engine or the LLM layer, both emitting one nodes-and-edges contract that drives the canvas, the export and the decision trace." />
+       alt="AURORA card: a lab circuit photo passes through YOLO detection, then graph rules and LLM assist untangle the wires into a unified topology graph for canvas editing, export, and decision traces." />
 </picture>
 </p>
 
-#### AURORA · circuit recognition and topology recovery `private`
+#### AURORA · circuit recognition & topology recovery `private`
 
-It started as an attempt to read classroom circuit diagrams. What became clear along the way is that detecting the components is not the hard part — reconstructing the wires into a topology you can trust is.
+This started as a competition project (and ended up winning a national first prize). The goal is straightforward: take a smartphone photo of a classroom lab circuit and turn it into an editable, verifiable circuit diagram.
 
-- With thin evidence it refuses to guess: it would rather return “unknown” than invent an edge that merely looks plausible
-- Wires are clustered with union-find and loops are closed with a Prim MST, which keeps edges from flying across the graph
-- Every edge records how it came to exist, so a wrong answer can be traced to the step that produced it
-- YOLO runs in the browser itself, dropping from WebGPU to WASM when it has to
+Spotting resistors, switches, and power supplies with YOLO turns out to be the easy half. The real headache is the wires — crossed jumpers, desk glare, and awkward camera angles make it way too easy for a vision model to hallucinate connections that aren't really there. Instead of letting it guess, we combine visual detection with graph algorithms and LLM reasoning to untangle the wiring. Whenever the photo doesn't give enough evidence for a connection, it flags that wire for a human to confirm rather than inventing one, and records how every edge was decided so mistakes can be traced back. The detector can also run straight inside the browser via ONNX Runtime, so you don't even have to wait on a server just to test an image.
 
 <p align="center">
 <picture>
@@ -177,11 +149,11 @@ It started as an attempt to read classroom circuit diagrams. What became clear a
 </picture>
 </p>
 
-Python and plain JavaScript are the main tools; Vue and TypeScript are used on the online-course side.<br>
-On the model side it is `llama.cpp` and GGUF; on the vision side, YOLO and `ONNX Runtime`.<br>
-Deployment is mostly Nginx plus Windows services, with whatever can move to Linux moved.
+Python and plain JavaScript are my daily drivers, with Vue and TypeScript when an interface calls for a bit more structure.<br>
+On the model side it's `llama.cpp` with GGUF; on the vision side, YOLO paired with `ONNX Runtime`.<br>
+Deployment is mostly Nginx in front of Windows services, with pieces moving over to Linux bit by bit.
 
-Most of the code gets written inside Copilot and Codex; DSH and AstrBot are the agent projects I have been poking at lately.
+Most of my coding happens alongside Copilot and Codex, and lately I've been poking at agent projects like DSH and AstrBot on the side.
 
 <p align="center">
 <picture>
@@ -221,9 +193,7 @@ Most of the code gets written inside Copilot and Codex; DSH and AstrBot are the 
 <img src="./assets/misc/strand-portrait.webp" width="180"
      alt="Portrait of my own character, cut into a soft diamond with a dark red rim." />
 
-Both projects above are private repositories, so only the approach is written down here.
-
-The title card, project cards, dividers, monogram and the language pills are generated by <a href="./scripts/build_assets.py">scripts/build_assets.py</a>, so the palette is maintained in one place.
+The title card, project cards, dividers, monogram, and language pills are generated by <a href="./scripts/build_assets.py">scripts/build_assets.py</a>, so the palette stays in one place.
 
 <img src="./assets/icons/monogram.svg" width="34" alt="" />
 

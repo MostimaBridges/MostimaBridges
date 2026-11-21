@@ -304,18 +304,18 @@ def fit_font(draw, text: str, factory, max_width: float, start: int, tracking: f
 # ── 图内文案：中英各一套（Hero 与项目卡共用一张表） ──
 HERO_COPY = {
     "zh": {
-        "focus": (("方向", "AI · LLM 系统"),
-                  ("推理", "本地 + 云端"),
-                  ("交付", "全栈服务")),
+        "focus": (("日常", "个人建站 · AI 应用"),
+                  ("推理", "云端中转 + 本地模型"),
+                  ("开发", "前后端与运维一肩挑")),
         "status_label": "状态",
-        "status_value": "持续更新",
+        "status_value": "持续折腾",
     },
     "en": {
-        "focus": (("CORE", "AI · LLM SYSTEMS"),
-                  ("EDGE", "LOCAL + CLOUD"),
-                  ("SHIP", "FULL-STACK")),
+        "focus": (("CRAFT", "WEB · AI APPS"),
+                  ("MODEL", "CLOUD RELAY + LOCAL"),
+                  ("STACK", "SOLO FULL-STACK")),
         "status_label": "STATUS",
-        "status_value": "BUILDING",
+        "status_value": "TINKERING",
     },
 }
 
@@ -324,46 +324,46 @@ CARD_COPY = {
         "section": "// 项目",
         "chip": "私有仓库",
         "tessera": {
-            "subtitle": "多服务 AI 平台",
-            "caption": "一次请求的路径",
-            "tech": "asyncio · httpx · FastAPI · SQLAlchemy · Postgres",
+            "subtitle": "游戏资料 Wiki 与个人 AI 中转底座",
+            "caption": "从静态 Wiki 长出来的自用平台",
+            "tech": "FastAPI · Vanilla JS · SQLAlchemy · PostgreSQL · Nginx",
             "bullets": [
-                "云端和本地 GGUF 走同一套 provider 接口",
-                "熔断、排队、每日额度，按账本管",
-                "流式输出里夹带的元数据，边收边剥离",
-                "角色设定：编译 → 发布 → 泄漏检查",
-                "运维面：迁移、保留期清理、运行时设置",
+                "台前是给喜欢的游戏手搓的资料 Wiki 与课程子站",
+                "幕后是只给自己用的 AI Token / API 聚合中转站",
+                "云端接口与家里显卡跑的 GGUF 模型统一成一套调用",
+                "网页后台直接改模型配置与额度，切线路不用重启服务",
+                "自带节点掉线自动切换、流式输出清洗与日常运维脚本",
             ],
             "boxes": [
-                (0, 1, 348, "客户端", "网页对话 · 个人 API", False),
-                (388, 1, 404, "网关", "准入 · 配额 · 预算", True),
-                (388, 2, 404, "注册表", "按请求取 provider 快照", False),
-                (40, 3, 330, "本地节点", "llama.cpp · GGUF", False),
-                (410, 3, 330, "云端", "OpenAI 兼容", False),
-                (40, 4, 330, "熔断器", "忙不算故障", False),
-                (410, 4, 330, "回退链", "有序 · 带遥测", False),
+                (0, 1, 348, "台前站点", "游戏 Wiki · 课程子站", False),
+                (388, 1, 404, "自用 AI 网关", "统一接口 · 额度记账", True),
+                (388, 2, 404, "路由与配置", "后台热改 · 立即生效", False),
+                (40, 3, 330, "本地显卡节点", "llama.cpp · GGUF", False),
+                (410, 3, 330, "云端 API", "多厂商中转聚合", False),
+                (40, 4, 330, "健康检查", "区分排队与宕机", False),
+                (410, 4, 330, "自动兜底", "掉线无缝切备用源", False),
             ],
         },
         "aurora": {
-            "subtitle": "电路识别与拓扑还原",
-            "caption": "照片 → 结构化电路",
-            "tech": "ultralytics · torch · onnxruntime · tensorrt · ort-web",
+            "subtitle": "实验电路图识别与拓扑还原（国家级一等奖）",
+            "caption": "实拍照片 → 可编辑电路图",
+            "tech": "YOLOv8 · PyTorch · ONNX Runtime · WebGPU · FastAPI",
             "bullets": [
-                "规则引擎说不准就不猜，宁可少连一根",
-                "导线用并查集聚类，环路用 Prim MST 收尾",
-                "每条边都记着为什么存在，错了能回溯",
-                "串并联看主轴方向，另外带一道短路校验",
-                "浏览器里跑 YOLO，WebGPU 不行就退 WASM",
+                "竞赛获奖项目：拍一张课堂实验电路，还原成结构化拓扑图",
+                "先用 YOLO 找元件，再用图算法与大模型把导线连接理顺",
+                "并查集归并节点、最小生成树闭合回路，减少乱连线",
+                "拿不准的连线直接标待确认，并保留每一步的判断依据",
+                "模型支持在浏览器端直接推理，WebGPU 不可用时退回 WASM",
             ],
             "boxes": [
-                (0, 1, 268, "照片", "课堂实验", False),
-                (308, 1, 442, "检测器", "PT / ONNX / TensorRT", True),
-                (40, 2, 330, "规则引擎", "确定性 · 可解释", False),
-                (410, 2, 330, "LLM 层", "云端 + 本地 GGUF", False),
-                (160, 3, 428, "nodes + edges", "同一份 JSON 契约", True),
-                (40, 4, 236, "画布", "可编辑", False),
-                (292, 4, 236, "导出", "PNG · JSON", False),
-                (544, 4, 236, "解释", "决策路径", False),
+                (0, 1, 268, "实验照片", "课堂实拍输入", False),
+                (308, 1, 442, "元件检测", "YOLO · ONNX · 浏览器推理", True),
+                (40, 2, 330, "图算法引擎", "并查集 · 最小生成树", False),
+                (410, 2, 330, "大模型辅助", "复杂连线推理补全", False),
+                (160, 3, 428, "统一拓扑图", "节点与导线 JSON", True),
+                (40, 4, 236, "画布编辑", "手动微调", False),
+                (292, 4, 236, "结果导出", "图片 · 数据", False),
+                (544, 4, 236, "过程回溯", "查看判断依据", False),
             ],
         },
     },
@@ -371,46 +371,46 @@ CARD_COPY = {
         "section": "// WORK",
         "chip": "PRIVATE",
         "tessera": {
-            "subtitle": "Multi-service AI platform",
-            "caption": "REQUEST PATH",
-            "tech": "asyncio · httpx · FastAPI · SQLAlchemy · Postgres",
+            "subtitle": "Game Wiki & personal AI API relay",
+            "caption": "PUBLIC WIKI + PRIVATE AI BACKBONE",
+            "tech": "FastAPI · Vanilla JS · SQLAlchemy · PostgreSQL · Nginx",
             "bullets": [
-                "One provider interface: cloud APIs + local GGUF",
-                "Breaker, capacity queues, quota ledger",
-                "Metadata stripped from the token stream",
-                "Personas: compile, publish, leak-gate",
-                "Ops: migrations, retention, live settings",
+                "Up front: a fan-made game Wiki and course sub-site",
+                "Behind it: a private AI token & API relay for my own apps",
+                "One interface for cloud APIs and local GGUF models",
+                "Hot-swaps providers and budgets in web UI, no restart",
+                "Node health checks, auto-failover, and stream cleanup",
             ],
             "boxes": [
-                (0, 1, 348, "CLIENTS", "webchat · personal API", False),
-                (388, 1, 404, "GATEWAY", "admission · quota · budget", True),
-                (388, 2, 404, "REGISTRY", "per-request snapshot", False),
-                (40, 3, 330, "LOCAL NODE", "llama.cpp · GGUF", False),
-                (410, 3, 330, "CLOUD", "OpenAI-compatible", False),
-                (40, 4, 330, "BREAKER", "busy != broken", False),
-                (410, 4, 330, "FALLBACK", "ordered · telemetry", False),
+                (0, 1, 348, "FRONT SITES", "Game Wiki · Study site", False),
+                (388, 1, 404, "PRIVATE GATEWAY", "unified API · token budget", True),
+                (388, 2, 404, "LIVE ROUTER", "hot-swapped in admin UI", False),
+                (40, 3, 330, "LOCAL GPU", "llama.cpp · GGUF", False),
+                (410, 3, 330, "CLOUD APIS", "multi-provider relay", False),
+                (40, 4, 330, "HEALTH CHECK", "busy vs. down", False),
+                (410, 4, 330, "FAILOVER", "auto-switch on outage", False),
             ],
         },
         "aurora": {
-            "subtitle": "Circuit vision & topology recovery",
-            "caption": "PHOTO → STRUCTURED CIRCUIT",
-            "tech": "ultralytics · torch · onnxruntime · tensorrt · ort-web",
+            "subtitle": "Circuit photo to topology (National 1st Prize)",
+            "caption": "PHOTO → EDITABLE CIRCUIT",
+            "tech": "YOLOv8 · PyTorch · ONNX Runtime · WebGPU · FastAPI",
             "bullets": [
-                "Rules abstain when evidence is thin",
-                "Union-find clusters, Prim MST loops",
-                "Every edge keeps its provenance",
-                "PCA axis gate, DSU safety check",
-                "YOLO in-browser: WebGPU, then WASM",
+                "National 1st Prize: lab circuit photos to topologies",
+                "Pairs YOLO detection with graph rules and LLM assist",
+                "Union-Find wire clustering + Prim MST loop closure",
+                "Flags uncertain wires instead of guessing, with traces",
+                "In-browser YOLO inference via WebGPU or WASM",
             ],
             "boxes": [
-                (0, 1, 268, "PHOTO", "classroom photo", False),
-                (308, 1, 442, "DETECTOR", "PT / ONNX / TensorRT", True),
-                (40, 2, 330, "RULE ENGINE", "deterministic", False),
-                (410, 2, 330, "LLM LAYER", "cloud + local GGUF", False),
-                (160, 3, 428, "NODES + EDGES", "one JSON contract", True),
-                (40, 4, 236, "CANVAS", "editable", False),
+                (0, 1, 268, "LAB PHOTO", "classroom input", False),
+                (308, 1, 442, "DETECTOR", "YOLO · ONNX · in-browser", True),
+                (40, 2, 330, "GRAPH RULES", "Union-Find · Prim MST", False),
+                (410, 2, 330, "LLM ASSIST", "complex wire recovery", False),
+                (160, 3, 428, "TOPOLOGY GRAPH", "unified nodes & edges", True),
+                (40, 4, 236, "CANVAS", "interactive edit", False),
                 (292, 4, 236, "EXPORT", "PNG · JSON", False),
-                (544, 4, 236, "EXPLAIN", "decision path", False),
+                (544, 4, 236, "TRACE", "decision steps", False),
             ],
         },
     },
@@ -970,10 +970,10 @@ def main() -> int:
                     choices=["all", "hero", "cards", "divider", "portrait", "icons", "monogram", "lang"])
     args = ap.parse_args()
 
-    # divider / icons / monogram / lang are pure palette or vector work, so they
+    # divider / cards / icons / monogram / lang are pure palette or vector work, so they
     # must stay runnable without the artwork; only the bitmap targets need it.
     root = args.source_root
-    if root is None and args.only in ("all", "hero", "cards", "portrait"):
+    if root is None and args.only in ("all", "hero", "portrait"):
         ap.print_usage()
         print(f"ERROR: --source-root is required for --only {args.only}.\n"
               "       Point it at the read-only directory holding the hero artwork\n"
@@ -982,7 +982,7 @@ def main() -> int:
               file=sys.stderr)
         return 1
 
-    if args.only in ("all", "hero", "cards") and not (root / BANNER_SOURCE).exists():
+    if args.only in ("all", "hero") and not (root / BANNER_SOURCE).exists():
         print(f"ERROR: source artwork not found: {root / BANNER_SOURCE}", file=sys.stderr)
         return 1
 
