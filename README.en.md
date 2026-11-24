@@ -61,55 +61,19 @@ Solo developer building web apps and AI tools — started with a hand-coded game
 </picture>
 </p>
 
-<!-- ============================== ABOUT ============================== -->
-## // ABOUT
-
-Getting a quick demo to reply once is easy; what I care a lot more about is whether something I built still runs cleanly months later when I actually need it. Most of my projects start because I got tired of switching between five tabs, wiring up the same model client twice, or babysitting a task by hand.
-
-I tend to keep tooling light unless there's a good reason not to — plain JavaScript works fine for content pages without dragging in a bundler, while Python and FastAPI handle the backend side. Day to day I work mostly on Windows (leaning on PowerShell for packaging, health checks, and rollbacks) behind Nginx, while trying to keep services clean enough to run on Linux when it's time to move them.
+<!-- =========================== CONTRIBUTIONS =========================== -->
+## // Contributions
 
 <p align="center">
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="./assets/ornaments/divider-dark.webp" />
-  <source media="(prefers-color-scheme: light)" srcset="./assets/ornaments/divider-light.webp" />
-  <img src="./assets/ornaments/divider-light.webp" width="100%" alt="" />
+  <source media="(prefers-color-scheme: dark)" srcset="./assets/generated/snake-dark.svg" />
+  <source media="(prefers-color-scheme: light)" srcset="./assets/generated/snake-light.svg" />
+  <img src="./assets/generated/snake-light.svg" width="100%"
+       alt="A year of contribution squares, with a snake crawling across them and eating the filled ones." />
 </picture>
 </p>
 
-<!-- ============================== WORK ============================== -->
-## // WORK
-
-Both repositories below are private, so the source isn't public — this is just a look at what they actually do and how they came together.
-
-<p align="center">
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="./assets/projects/tessera-en-dark.webp" />
-  <source media="(prefers-color-scheme: light)" srcset="./assets/projects/tessera-en-light.webp" />
-  <img src="./assets/projects/tessera-en-light.webp" width="100%"
-       alt="TESSERA card: game Wiki and study site up front, backed by a private AI gateway unifying a local GPU node and cloud APIs with health checks and failover." />
-</picture>
-</p>
-
-#### TESSERA · game Wiki & personal AI relay `private`
-
-It began as a front-end class assignment: static HTML and jQuery for a lore Wiki about a game I like, with one page each for characters, items, worldbuilding, and guides. (The very first commit message was literally "1", and the one adding lazy loading was "lazy loading aaaaaa".) Editing raw HTML for every new entry got old fast, so I moved the data out, bolted on a backend, and pulled a companion study sub-site under the same roof. Those original pages — along with the study sub-site — are still the front door, and the front end is still plain JavaScript with no framework and no bundler.
-
-What takes most of my time now sits behind them: a private AI token and API relay built strictly for myself, never opened to external users. Any tool or page I write talks to this one endpoint, whether a request ends up hitting a cloud API or a local GGUF model running on my GPU at home. I can tweak provider weights, adjust budgets, or swap routes straight from a web admin page without restarting anything. It also tells the difference between a busy queued node and a dead one, fails over to another upstream when something drops, strips stray metadata out of token streams before it clutters chat history, and ships with small ops scripts so it stays out of my hair.
-
-<p align="center">
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="./assets/projects/aurora-en-dark.webp" />
-  <source media="(prefers-color-scheme: light)" srcset="./assets/projects/aurora-en-light.webp" />
-  <img src="./assets/projects/aurora-en-light.webp" width="100%"
-       alt="AURORA card: a lab circuit photo passes through YOLO detection, then graph rules and LLM assist untangle the wires into a unified topology graph for canvas editing, export, and decision traces." />
-</picture>
-</p>
-
-#### AURORA · circuit recognition & topology recovery `private`
-
-This started as a competition project (and ended up winning a national first prize). The goal is straightforward: take a smartphone photo of a classroom lab circuit and turn it into an editable, verifiable circuit diagram.
-
-Spotting resistors, switches, and power supplies with YOLO turns out to be the easy half. The real headache is the wires — crossed jumpers, desk glare, and awkward camera angles make it way too easy for a vision model to hallucinate connections that aren't really there. Instead of letting it guess, we combine visual detection with graph algorithms and LLM reasoning to untangle the wiring. Whenever the photo doesn't give enough evidence for a connection, it flags that wire for a human to confirm rather than inventing one, and records how every edge was decided so mistakes can be traced back. The detector can also run straight inside the browser via ONNX Runtime, so you don't even have to wait on a server just to test an image.
+<sub>Rebuilt once a day by GitHub Actions — see [`.github/workflows/snake.yml`](.github/workflows/snake.yml).</sub>
 
 <p align="center">
 <picture>
@@ -145,15 +109,11 @@ Spotting resistors, switches, and power supplies with YOLO turns out to be the e
   <source media="(prefers-color-scheme: dark)" srcset="./assets/icons/ai-tools-dark.svg" />
   <source media="(prefers-color-scheme: light)" srcset="./assets/icons/ai-tools-light.svg" />
   <img src="./assets/icons/ai-tools-light.svg" width="217" height="48"
-       alt="GitHub Copilot, Codex, DSH, AstrBot" />
+       alt="GitHub Copilot, Codex, DeepSeek Harness (DSH), AstrBot" />
 </picture>
 </p>
 
-Python and plain JavaScript are my daily drivers, with Vue and TypeScript when an interface calls for a bit more structure.<br>
-On the model side it's `llama.cpp` with GGUF; on the vision side, YOLO paired with `ONNX Runtime`.<br>
-Deployment is mostly Nginx in front of Windows services, with pieces moving over to Linux bit by bit.
-
-Most of my coding happens alongside Copilot and Codex, and lately I've been poking at agent projects like DSH and AstrBot on the side.
+Python and plain JavaScript are my daily drivers, with Vue and TypeScript when an interface calls for a bit more structure. On the model side it's `llama.cpp` with GGUF; on the vision side, YOLO paired with `ONNX Runtime`. Deployment is mostly Nginx in front of Windows services managed with PowerShell scripts, with pieces moving over to Linux bit by bit. Most of my coding happens alongside Copilot and Codex, and lately I've been poking at agent projects like DeepSeek Harness (DSH) and AstrBot on the side.
 
 <p align="center">
 <picture>
@@ -163,19 +123,55 @@ Most of my coding happens alongside Copilot and Codex, and lately I've been poki
 </picture>
 </p>
 
-<!-- =========================== CONTRIBUTIONS =========================== -->
-## // Contributions
+<!-- ============================== ABOUT ============================== -->
+## // ABOUT
+
+Overworked Chinese college student, still can't find a job. With nothing lined up yet, I'm mostly keeping busy maintaining the sites and tools I use myself.
+
+Most of my full-stack tinkering started with building a Wiki site for a game I liked—just a few static pages at first, which eventually grew into its own backend and personal services. I'd rather build things I actually want to keep opening months later than one-off demos, and usually that just means writing small scripts so I have less repetitive work to do.
 
 <p align="center">
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="./assets/generated/snake-dark.svg" />
-  <source media="(prefers-color-scheme: light)" srcset="./assets/generated/snake-light.svg" />
-  <img src="./assets/generated/snake-light.svg" width="100%"
-       alt="A year of contribution squares, with a snake crawling across them and eating the filled ones." />
+  <source media="(prefers-color-scheme: dark)" srcset="./assets/ornaments/divider-dark.webp" />
+  <source media="(prefers-color-scheme: light)" srcset="./assets/ornaments/divider-light.webp" />
+  <img src="./assets/ornaments/divider-light.webp" width="100%" alt="" />
 </picture>
 </p>
 
-<sub>Rebuilt once a day by GitHub Actions — see [`.github/workflows/snake.yml`](.github/workflows/snake.yml).</sub>
+<!-- ============================== WORK ============================== -->
+## // WORK
+
+Both repositories below are private, so the source isn't public — this is just a look at what they actually do and how they came together.
+
+<p align="center">
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="./assets/projects/tessera-en-dark.webp" />
+  <source media="(prefers-color-scheme: light)" srcset="./assets/projects/tessera-en-light.webp" />
+  <img src="./assets/projects/tessera-en-light.webp" width="100%"
+       alt="TESSERA card: a plain-JS game Wiki and course-notes site up front, backed by a private AI gateway unifying cloud APIs and a home GPU with health checks and failover." />
+</picture>
+</p>
+
+#### TESSERA · game Wiki & personal AI relay `private`
+
+That game Wiki I mentioned started out as a front-end class assignment: static HTML and jQuery for a lore Wiki about a game I like, with one page each for characters, items, worldbuilding, and guides. (The very first commit message was literally "1", and the one adding lazy loading was "lazy loading aaaaaa".) Editing raw HTML for every new entry got old fast, so I moved the data out, bolted on a backend, and pulled a course-notes sub-site under the same roof. Those original pages — along with the course-notes site — are still the front door, and the front end is still plain JavaScript with no framework and no bundler.
+
+What takes most of my time now sits behind them: a private AI token and API relay built strictly for myself, never opened to external users. Any tool or page I write talks to this one endpoint, whether a request ends up hitting a cloud API or a local GGUF model running on my GPU at home. I can tweak provider weights, adjust budgets, or swap routes straight from a web admin page without restarting anything. It also tells the difference between a busy queued node and a dead one, fails over to another upstream when something drops, strips stray metadata out of token streams before it clutters chat history, and ships with small ops scripts so it stays out of my hair.
+
+<p align="center">
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="./assets/projects/aurora-en-dark.webp" />
+  <source media="(prefers-color-scheme: light)" srcset="./assets/projects/aurora-en-light.webp" />
+  <img src="./assets/projects/aurora-en-light.webp" width="100%"
+       alt="AURORA card: a lab circuit photo passes through YOLO detection, then graph rules and LLM assist untangle the wires into a unified topology graph for canvas editing, export, and decision traces." />
+</picture>
+</p>
+
+#### AURORA · circuit recognition & topology recovery `private`
+
+This started as a competition project (and ended up winning a national first prize). The goal is straightforward: take a smartphone photo of a classroom lab circuit and turn it into an editable, verifiable circuit diagram.
+
+Spotting resistors, switches, and power supplies with YOLO turns out to be the easy half. The real headache is the wires — crossed jumpers, desk glare, and awkward camera angles make it way too easy for a vision model to hallucinate connections that aren't really there. Instead of letting it guess, we combine visual detection with graph algorithms and LLM reasoning to untangle the wiring. Whenever the photo doesn't give enough evidence for a connection, it flags that wire for a human to confirm rather than inventing one, and records how every edge was decided so mistakes can be traced back. The detector can also run straight inside the browser via ONNX Runtime, so you don't even have to wait on a server just to test an image.
 
 <p align="center">
 <picture>
